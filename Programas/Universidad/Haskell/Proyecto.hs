@@ -236,6 +236,7 @@ y m como [n..m]. -}
 
 esPrimo :: Int -> Bool
 esPrimo n = not(existe' [2..n-1] (esMultiplo n)) || n == 2
+
 {-*Main> esPrimo 1
 True
 *Main> esPrimo 123412
