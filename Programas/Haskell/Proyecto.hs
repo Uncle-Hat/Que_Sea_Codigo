@@ -3,6 +3,12 @@
 --a)
 esCero :: Int -> Bool      -- verifica si un entero es igual a 0.
 esCero x = x == 0
+{-
+*Main> esCero 5
+False
+*Main> esCero 0
+True
+-}
 --b) 
 esPositivo :: Int -> Bool  -- verifica si un entero es estrictamente mayor a 0.
 esPositivo x = x>0
@@ -113,15 +119,17 @@ hayMultiplo c xs = esMultiplo c xs
 c) sumaCuadrados :: Int -> Int, dado un numero no negativo n, calcula la suma de
 los primeros n cuadrados, es decir Ayuda: En Haskell se puede escribir la lista que contiene el rango de numeros entre n
 y m como [n..m].-}
-sumaCuadrados :: Int -> Int sumaCuadrados n = sumatoria'[0..] (^2)
+sumaCuadrados :: Int -> Int 
+sumaCuadrados n = sumatoria'[0..] (^2)
 
 {-
 d) Programar la fucion existeDivisor::Int-> [Int] -> Bool, que dado en entero n
 y una lista ls , devuelve True si y solo si, existe algun elemento en ls que divida a na.
 -}
-esDivisor 
+esDivisor :: Int -> Int -> Bool
+esDivisor n x = n `mod` x == 0
 existeDivisor :: Int -> [Int] -> Bool
-existeDivisor n ls = existe 
+existeDivisor n ls = existe' ls (esDivisor n)
 
 
 {- e) Utilizando la funcion del apartado anterior, definı la funcion esPrimo:: Int -> Bool,
