@@ -249,8 +249,7 @@ False-}
 
 {- g) Programar la funcion multiplicaPrimos :: [Int] -> Int que calcula el producto
 de todos los numeros primos de una lista. -}
-{- multiplicaPrimos :: [Int] -> Int
-multiplicaPrimos xs = -}
+
 
 {-
 h) Programar la funcion esFib :: Int -> Bool, que dado un entero n, devuelve True
