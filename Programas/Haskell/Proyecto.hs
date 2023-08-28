@@ -124,9 +124,6 @@ existeDivisor :: Int -> [Int] -> Bool
 existeDivisor n ls = existe 
 
 
-
-
-
 {- e) Utilizando la funcion del apartado anterior, definı la funcion esPrimo:: Int -> Bool,
 que dado un entero n, devuelve True si y solo si n es primo.
 Ayuda: En Haskell se puede escribir la lista que contiene el rango de numeros entre n
