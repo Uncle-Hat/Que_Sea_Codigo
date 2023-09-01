@@ -99,11 +99,11 @@ pertenece c [] = False
 pertenece c (x:xs)  | c == x = True
                     | c /= x = pertenece c xs
 {-
- *Main> pertenece 5 [5,6,7,8,9]
+*Main> pertenece 5 [5,6,7,8,9]
 True
 *Main> pertenece 5 [6,7,8,9]
 False
- -}
+-}
 {- 4. Programa las siguientes funciones que implementan los cuantificadores generales. Nota que
 el segundo parametro de cada funcion, es otra funcion! -}
 {- a) paratodo’ :: [a] -> (a -> Bool) -> Bool, dada una lista xs de tipo [a] y un
@@ -248,18 +248,44 @@ False-}
 factorialnorecurs :: Int -> Int
 factorialnorecurs n = productoria' [1..n] id
 
-{- g) Programar la funcion multiplicaPrimos :: [Int] -> Int que calcula el producto
-de todos los numeros primos de una lista. -}
+-- g) Programar la funcion multiplicaPrimos :: [Int] -> Int que calcula el producto de todos los numeros primos de una lista.
+{- multiplicaPrimos :: [Int] -> Int
+multiplicaPrimos xs =  -}
+-- h) Programar la funcion esFib :: Int -> Bool, que dado un entero n, devuelve True si y solo si n esta en la sucesion de Fibonacci.
+fib :: Int -> Int
+fib n   | (n<=1) = n --Razonamos que en los dos primeros casos devuelve su propio n tal que fib 1= 1 y fib 0 = 0 *Tuve problemas llevando a cabo el código por mi mismo, por lo tanto implementé código y traté de entender qué hace
+        | otherwise = fib(n-1) + fib(n-2)
+esFib :: Int -> Bool
+esFib n = pertenece n (map fib [0..(n+1)])
+{- 
+*Main> fib 5
+5
+*Main> fib 23
+28657
+*Main> fib 1
+1
+*Main> fib 8
+21 
+Main> esFib 2
+True
+*Main> esFib 1
+True
+*Main> esFib 8
+True
+*Main> esFib 12
+False
+-}
 
+{- Ayuda: Realizar una funcion auxiliar fib :: Int -> Int que dado un n devuelva el
+n-esimo elemento de la sucesion. -}
+
+{- i) Utilizando la funcion del apartado anterior, definı la funcion todosFib :: [Int] -> Bool
+que dada una lista xs de enteros, devuelva si todos los elementos de la lista pertenecen
+(o no) a la sucesion de Fibonacci. -}
+{- todosFib :: [Int] -> Bool
+todosFib xs = paratodo' esFib xs -}
 
 {-
-h) Programar la funcion esFib :: Int -> Bool, que dado un entero n, devuelve True
-si y solo si n esta en la sucesion de Fibonacci.
-Ayuda: Realizar una funcion auxiliar fib :: Int -> Int que dado un n devuelva el
-n-esimo elemento de la sucesion.
-i) Utilizando la funcion del apartado anterior, definı la funcion todosFib :: [Int] -> Bool
-que dada una lista xs de enteros, devuelva si todos los elementos de la lista pertenecen
-(o no) a la sucesion de Fibonacci.
 7. Indaga en Hoogle sobre las funciones map y filter. Tambien podes consultar su tipo en
 ghci con el comando :t.
 8. Programa una funcion que dada una lista de numeros xs, devuelve la lista que resulta de
