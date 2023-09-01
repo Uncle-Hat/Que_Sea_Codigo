@@ -284,15 +284,25 @@ que dada una lista xs de enteros, devuelva si todos los elementos de la lista pe
 (o no) a la sucesion de Fibonacci. -}
 {- todosFib :: [Int] -> Bool
 todosFib xs = paratodo' esFib xs -}
+{- 7. Indaga en Hoogle sobre las funciones map y filter. Tambien podes consultar su tipo en
+ghci con el comando :t.-}
+{- 
+*Main> :t map
+map :: (a -> b) -> [a] -> [b]
+*Main> :t filter
+filter :: (a -> Bool) -> [a] -> [a]
+-}
+{-8. Programa una funcion que dada una lista de numeros xs, devuelve la lista que resulta de
+duplicar cada valor de xs.-}
+-- a) Definila usando recursion.
+duplica :: [Int] -> [Int]
+duplica [] = 0
+duplica (x:xs) = 
+-- b) Definila utilizando la funcion map.
+dupplicamap :: [Int] -> [Int]
+duplicamap xs = map (*2) xs
 
 {-
-7. Indaga en Hoogle sobre las funciones map y filter. Tambien podes consultar su tipo en
-ghci con el comando :t.
-8. Programa una funcion que dada una lista de numeros xs, devuelve la lista que resulta de
-duplicar cada valor de xs.
-a) Definila usando recursion.
-b) Definila utilizando la funcion map.
-
 9. Programa una funcion que dada una lista de numeros xs, calcula una lista que tiene como
 elementos aquellos numeros de xs que son primos.
 a) Definila usando recursion.
