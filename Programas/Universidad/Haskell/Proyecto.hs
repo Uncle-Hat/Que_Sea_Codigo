@@ -245,7 +245,8 @@ False
 False-}
 
 --f ) ¿Se te ocurre como redefinir factorial (ej. 2d) para evitar usar recursion?
-
+factorialnorecurs :: Int -> Int
+factorialnorecurs n = productoria' [1..n] id
 
 {- g) Programar la funcion multiplicaPrimos :: [Int] -> Int que calcula el producto
 de todos los numeros primos de una lista. -}
