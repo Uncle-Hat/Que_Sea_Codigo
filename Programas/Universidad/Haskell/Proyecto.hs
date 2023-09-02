@@ -386,20 +386,58 @@ multiplicaPrimosFiltered xs = productoria(filter esPrimo xs)
 la lista cuyos elementos son iguales a ese valor. Por ejemplo: -}
 
 -- a) Programa primIgualesA por recursion.
-{- 
-primIgualesA :: a -> [a] -> [a]
+primIgualesA :: (Eq a) => a -> [a] -> [a]
 primIgualesA n [] = []
-primIgualesA n (x:xs)   | n == x = x: primIgualesA 
+primIgualesA n (x:xs)   | (n == x) = x: primIgualesA n xs
+                        | otherwise = []
+{-
+*Main> primIgualesA 5 [0,1,2,3,4,5,5,5,5,5,4,3,2,1,5,67]
+[]
+*Main> primIgualesA 5 [5,5,5,2,5,4,3,2,1,5,67]
+[5,5,5]
 -}
 
--- b) Programa nuevamente la funcion utilizando existe' ls (esDivisor n) takeWhile.
+-- b) Programa nuevamente la funcion utilizando primIgualesA.
+
+primIgualesAtakewhile :: Eq a => a -> [a] -> [a]
+primIgualesAtakewhile n xs = takeWhile (==n) xs
+{- 
+*Main> primIgualesAtakewhile 5 [5,5,5,5,5,4,3,2,1,5,67]
+[5,5,5,5,5]
+*Main> primIgualesAtakewhile 5 [0,1,2,3,4,5,5,5,5,5,4,3,2,1,5,67]
+[]
+-}
 
 
 {- 11. La funcion primIguales toma una lista y devuelve el mayor tramo inicial de 
 la lista cuyos elementos son todos iguales entre sı. Por ejemplo: -}
-
+-- * No estoy seguro si el tramo inicial de la lista se refiera a que solo puede estar al principio de la lista o si es el primer tramo que se repite
 -- a) Programa primIguales por recursion.
-
-
--- b) Usa cualquier version de primIgualesA para programar existe' ls (esDivisor n)primIguales. Esta permitido dividir en casos, pero no usar recursion.
-
+primIguales :: Eq a => [a] -> [a] 
+primIguales [] = []
+primIguales [x] = [x]
+primIguales  (x:y:xs)   | x==y = x :primIguales (y:xs)
+                        | x/=y = [x]
+{-
+*Main> primIguales [True,True,True,False,False]
+[True,True,True]
+*Main> primIguales [5,5,5,5,3,4,2,1]
+[5,5,5,5]
+*Main> primIguales [5,5,5,5,3,4,2,1,1,1]
+[5,5,5,5]
+*Main> primIguales [5,5,3,4,2,1,1,1]
+[5,5]
+-}
+-- b) Usa cualquier version de primIgualesA para programar primIguales. Esta permitido dividir en casos, pero no usar recursion.
+primIguales' :: Eq a => [a] -> [a]
+primIguales' [] = []
+primIguales' (x:xs) = primIgualesA x (x:xs)
+{-
+*Main> primIguales' [True,False,True,True,True]
+[True]
+*Main> primIguales' [False,True,True,True]
+[False]
+*Main> primIguales' [True,True,True,False,True]
+[True,True,True]
+*Main> 
+-}
