@@ -266,15 +266,28 @@ False-}
 factorialnorecurs :: Int -> Int
 factorialnorecurs n = productoria' [1..n] id
 
--- g) Programar la funcion multiplicaPrimos :: [Int] -> Int que calcula el producto de todos los numeros primos de una lista.
-{- multiplicaPrimos :: [Int] -> Int
-multiplicaPrimos xs =  -}
+-- g) Programar la funcion multiplicaPrimos :: [Int] -> Int que calcula el producto de todos los numeros primos de una lista. 
+devuelvePrimos :: [Int] -> [Int]
+devuelvePrimos [] = []
+devuelvePrimos (x:xs)   | esPrimo x == True = x : devuelvePrimos xs
+                        | esPrimo x == False = devuelvePrimos xs
+
+multiplicaPrimos :: [Int] -> Int
+multiplicaPrimos xs =  productoria (devuelvePrimos xs)
+{- 
+*Main> multiplicaPrimos [5]
+5
+*Main> multiplicaPrimos [1,2,3,5,6,7,8,9]
+210 -}
+
 -- h) Programar la funcion esFib :: Int -> Bool, que dado un entero n, devuelve True si y solo si n esta en la sucesion de Fibonacci.
+
 fib :: Int -> Int
 fib n   | (n<=1) = n --Razonamos que en los dos primeros casos devuelve su propio n tal que fib 1= 1 y fib 0 = 0 *Tuve problemas llevando a cabo el código por mi mismo, por lo tanto implementé código y traté de entender qué hace
         | otherwise = fib(n-1) + fib(n-2)
 esFib :: Int -> Bool
 esFib n = pertenece n (map fib [0..(n+1)])
+
 {- 
 *Main> fib 5
 5
@@ -349,16 +362,37 @@ sonPrimosFiltered xs = filter esPrimo xs
 -}
 
 -- c) Revisa tu definicion del ejercicio 6g. ¿Como podes mejorarla?
+{- Mi definicion de 6g fue 
+devuelvePrimos :: [Int] -> [Int]
+devuelvePrimos [] = []
+devuelvePrimos (x:xs)   | esPrimo x == True = x : devuelvePrimos xs
+                        | esPrimo x == False = devuelvePrimos xs
 
+multiplicaPrimos :: [Int] -> Int
+multiplicaPrimos xs =  productoria (devuelvePrimos xs)
+-}
+-- * Creo que se puede mejorar por medio de una función filter 
+multiplicaPrimosFiltered :: [Int] -> Int
+multiplicaPrimosFiltered xs = productoria(filter esPrimo xs) 
+{- 
+*Main> multiplicaPrimosFiltered [1,2,3,4,5,6,7,8,9,10]
+210
+*Main> multiplicaPrimosFiltered [2,3,4,5,6,7]
+210
+-}
 
 
 {- 10. La funcion primIgualesA toma un valor y una lista, y calcula el tramo inicial mas largo de
 la lista cuyos elementos son iguales a ese valor. Por ejemplo: -}
 
 -- a) Programa primIgualesA por recursion.
+{- 
+primIgualesA :: a -> [a] -> [a]
+primIgualesA n [] = []
+primIgualesA n (x:xs)   | n == x = x: primIgualesA 
+-}
 
-
--- b) Programa nuevamente la funcion utilizandoexiste' ls (esDivisor n) takeWhile.
+-- b) Programa nuevamente la funcion utilizando existe' ls (esDivisor n) takeWhile.
 
 
 {- 11. La funcion primIguales toma una lista y devuelve el mayor tramo inicial de 
