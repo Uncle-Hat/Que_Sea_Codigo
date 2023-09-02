@@ -24,8 +24,8 @@ True -}
 
 --c) 
 esVocal :: Char -> Bool   -- verifica si un caracter es una vocal en minúscula.
-esVocal x   | x == 'a'|| x =='e'|| x =='i'|| x =='o'|| x =='u' = True --El or lógico recibe booleanos, por lo tanto tenemos que dárselos mediante casos
-            | otherwise = False
+esVocal x       | x == 'a'|| x =='e'|| x =='i'|| x =='o'|| x =='u' = True --El or lógico recibe booleanos, por lo tanto tenemos que dárselos mediante casos
+                | otherwise = False
 
 {- 
 *Main> esVocal 'a'
@@ -106,8 +106,8 @@ promedio xs = div(sumatoria xs) (length xs) -- *Tuve problemas de tipos usando e
 --3. Programá la funcion pertenece :: Int -> [Int] -> Bool, que verifica si un número se encuentra en una lista.
 pertenece :: Int -> [Int] -> Bool
 pertenece c [] = False
-pertenece c (x:xs)  | c == x = True
-                    | c /= x = pertenece c xs
+pertenece c (x:xs)      | c == x = True
+                        | c /= x = pertenece c xs
 {-
 *Main> pertenece 5 [5,6,7,8,9]
 True
@@ -125,8 +125,8 @@ el segundo parametro de cada funcion, es otra funcion! -}
 
 paratodo' :: [a] -> (a -> Bool) -> Bool
 paratodo' [] t = False
-paratodo' (x:xs) t  | t x == True = True
-                    | t x /= True = False
+paratodo' (x:xs) t      | t x == True = True
+                        | t x /= True = False
 {- 
 *Main> paratodo' [5,4,2,1,0] (<0)
 False
@@ -139,8 +139,8 @@ True
 
 existe' :: [a] -> (a -> Bool) -> Bool
 existe' [] p = False
-existe' (x:xs) p    | p x == True = True 
-                    | p x == False = existe' xs p
+existe' (x:xs) p        | p x == True = True 
+                        | p x == False = existe' xs p
 {- 
 *Main> existe' [5,(-3),7] (<0)
 True
