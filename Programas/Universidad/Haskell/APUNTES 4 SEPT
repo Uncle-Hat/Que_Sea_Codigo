@@ -1,0 +1,33 @@
+{-Como inventar tipos de datos nuevos
+Haskell: Enteros, Booleanos, etc.
+Pero es un poco molesto tener solo esas osas, enm computaciṕon uino trata de representar algunas cosas de la visda real o imaginaria también, tenemos funciones monstruito y queremos crear valores nuevos
+Maneras de crear valores nuevos que en principio no los da haskell
+Inventamos TIPOS DE DATOS nuevos.
+data Pieza
+En el caso de ajedre si tengo fila finita de valores-}
+data Pieza: Rey | Dama | Torre | Caballo | Alfíl | Peón
+'|' separa valores
+valor :: Pieza -> Int
+valor Dama = 9
+valor Torre = 5
+valor Peon = 1 
+valor Rey = 1000000
+valor - = 3
+--Son funciones, pero son funciones naif a las que llamamos "Constructores"
+data Dia = Lu | Ma | Mi | Ju | Vi | Sa | Do
+mostrar :: Dia -> String
+mostrar Lu = "Lunes"
+mostrar Ma = "Martes"
+...
+mostrar Do = "Domingo"
+{-Polimorfismo (Característica de Haskell exclusivamente) definir las clases de tipo de datos mediante agrupación de funciones
+deriving y la clase que yo quiero (Eq,Show,Ord) Igual, Muestra, Ordena
+En el orden que los escribi en la declaración de tipo van a quedar
+Enum, Es una clase que nos permite escribir las cosas que ustedes hacían, por ejemplo [1..4] = [1,2,3,4] 
+succ {sucesión}, pred-}
+diaSig :: Dia -> Dia
+diaSig DO = Lu
+diaSig d = succ d
+datFig = Circulo (Float, Float) 
+        |Rect (Float,Float) (Float,Float)
+
