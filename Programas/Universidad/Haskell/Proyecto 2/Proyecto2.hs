@@ -21,17 +21,23 @@ data Carrera = Matematica | Fisica | Computacion | Astronomia
 que devuelve el nombre completo de la carrera en forma de string. Por ejemplo, para el
 constructor Matematica, debe devolver ”Licenciatura en Matematica”. -}
 titulo :: Carrera -> String
-titulo Matematica = "Licenciatura en Matemática"
-titulo Fisica = "Licenciatura en Física"
-titulo Computacion = "Licenciatura en Computación"
-titulo Astronomia = "Licenciatura en Astronomía"
+titulo Matematica = "Licenciatura en Matematica"
+titulo Fisica = "Licenciatura en Fisica"
+titulo Computacion = "Licenciatura en Computacion"
+titulo Astronomia = "Licenciatura en Astronomia"
+
+-- *Main> titulo Matematica 
+-- "Licenciatura en Matematica"
+-- *Main> titulo Fisica 
+-- "Licenciatura en Fisica"
+
 
 {- c) Para escribir musica se utiliza la denominada notacion musical, la cual consta de
 notas (do, re, mi, ...). Ademas, estas notas pueden presentar algun modificador ]
 (sostenido) o [ (bemol), por ejemplo do], si[, etc. Por ahora nos vamos a olvidar de
 estos modificadores (llamados alteraciones) y vamos a representar las notas basicas.
 Definir el tipo NotaBasica con constructores Do, Re, Mi, Fa, Sol, La y Si -}
-data NotaBasica = Do | Re | Mi | Fa | Sol | La | Si 
+data NotaBasica = Do | Re | Mi | Fa | Sol | La | Si deriving(Eq,Ord,Show)
 
 {- d) El sistema de notacion musical anglosajon, tambien conocido como notacion o cifrado
 americano, relaciona las notas basicas con letras de la A a la G. Este sistema se usa por
@@ -39,6 +45,7 @@ ejemplo para las tablaturas de guitarra. Programar usando pattern matching la fu
 cifradoAmericano : : NotaBasica −> Char
 que relaciona las notas Do, Re, Mi, Fa, Sol, La y Si con los caracteres ’C’ , ’D’, ’E’,
 ’F’, ’G’, ’A’ y ’B’ respectivamente. -}
+
 cifradoAmericano :: NotaBasica -> Char
 cifradoAmericano Do = 'C'
 cifradoAmericano Re = 'D'
@@ -48,8 +55,16 @@ cifradoAmericano Sol = 'G'
 cifradoAmericano La = 'A'
 cifradoAmericano Si = 'B'
 
--- 2. Clases de tipos. En Haskell usamos el operador (==) para comparar valores del mismo tipo:
-{-
+
+-- *Main> cifradoAmericano Do
+-- 'C'
+-- *Main> cifradoAmericano Re
+-- 'D'
+-- *Main> cifradoAmericano Fa
+-- 'F'
+
+
+{- 2. Clases de tipos. En Haskell usamos el operador (==) para comparar valores del mismo tipo:
 1
 *Main> 4 == 5
 False
@@ -78,11 +93,19 @@ Ahora es posible comparar carreras:
 *Main> Matematica == Matematica
 True
 *Main> Matematica == Computacion
-False
-a) Completar la definicion del tipo NotaBasica para que las expresiones
+False -}
+
+{- a) Completar la definicion del tipo NotaBasica para que las expresiones
 *Main> Do <= Re
 *Main> Fa `min` Sol
-sean validas y no generen error. Ayuda: usar deriving con multiples clases.
+sean validas y no generen error. Ayuda: usar deriving con multiples clases. -}
+
+-- *Main> Fa `min` Sol
+-- Fa
+-- *Main> Do <= Re
+-- True
+
+{-
 3. Polimorfismo ad hoc Recordemos la funcion sumatoria del proyecto anterior:
 sumatoria : : [ I n t ] − > I n t
 sumatoria [ ] = 0
