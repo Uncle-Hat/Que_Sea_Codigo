@@ -69,32 +69,75 @@ sean validas y no generen error. Ayuda: usar deriving con multiples clases. -}
 -- *Main> Do <= Re
 -- True
 
+
 --3-Polimorfismo ad hoc
 {- a) Definir usando polimorfismo ad hoc la funcion minimoElemento que calcula (de manera
 recursiva) cual es el menor valor de una lista de tipo [a]. Asegurarse que solo este
-definida para listas no vacıas. -}{- 
-b) Definir la funcion minimoElemento’ de manera tal que el caso base de la recursion
+definida para listas no vacıas. -}
+minimoElemento :: Ord a => [a] -> a 
+minimoElemento [x] = x
+minimoElemento (x:xs) = x `min` (minimoElemento xs)
+
+-- *Main> minimoElemento [5,4,3,2,1]
+-- 1
+-- *Main> minimoElemento [5,10,2,100,1,4]
+-- 1
+
+{- b) Definir la funcion minimoElemento’ de manera tal que el caso base de la recursion
 sea el de la lista vacıa. Para ello revisar la clase Bounded.
 Ayuda: Para probar esta funcion dentro de ghci con listas vacıas, indicar el tipo concreto con tipos de la clase Bounded, por ejemplo: ([1,5,10]::[Int]), ([]::[Bool]),
-etc. -}
+etc.-}
+minimoElemento' :: (Bounded a, Ord a) => [a] -> a
+minimoElemento' [] = maxBound
+minimoElemento' (x:xs) = min x (minimoElemento' xs) 
+
+-- *Main> minimoElemento' ([1, 5, 10] :: [Int])
+-- 1
+-- *Main> minimoElemento' ([]::[Bool])
+-- True
+
 {-c) Usar la funcion minimoElemento para determinar la nota mas grave de la melodıa:
 [Fa, La, Sol, Re, Fa] -}
--- En las definiciones de los ejercicios siguientes, deben agregar deriving solo cuando sea
--- estrictamente necesario
+{- En las definiciones de los ejercicios siguientes, deben agregar deriving solo cuando sea
+estrictamente necesario -}
+-- *Main> minimoElemento [Fa,La,Sol,Re,Fa]
+-- Re
 
-{-
-4. Sinonimo de tipos; constructores con parametros.
-a) Implementa el tipo Deportista y todos sus tipos accesorios (NumCamiseta, Altura,
-Zona, etc) tal como estan definidos arriba.
-b) ¿Cual es el tipo del constructor Ciclista?
-c) Programa la funcion contar_velocistas :: [Deportista] -> Int que dada una
+{-4. Sinonimo de tipos; constructores con parametros.-}
+
+{- a) Implementa el tipo Deportista y todos sus tipos accesorios (NumCamiseta, Altura, Zona, etc) tal como estan definidos arriba. -}
+
+data Deportista = Ajedrecista -- Constructor sin argumentos
+| Ciclista Modalidad -- Constructor con un argumento
+| Velocista Altura -- Constructor con un argumento
+| Tenista TipoReves ManoHabil Altura -- Constructor con tres argumentos
+| Futbolista Zona NumCamiseta PiernaHabil Altura -- Constructor con ...
+
+-- Sinonimo de Tipo
+type Altura = Int
+type NumCamiseta = Int
+
+--Sinónimo
+type ManoHabil = PiernaHabil
+
+{- b) ¿Cual es el tipo del constructor Ciclista? -}
+
+
+{- c) Programa la funcion contar_velocistas :: [Deportista] -> Int que dada una
 lista de deportistas xs, devuelve la cantidad de velocistas que hay dentro de xs.
-Programa contar_velocistas sin usar igualdad, utilizando pattern matching.
-d) Programa la funcion contar_futbolistas :: [Deportista] -> Zona -> Int que
+Programa contar_velocistas sin usar igualdad, utilizando pattern matching. -}
+
+
+{- d) Programa la funcion contar_futbolistas :: [Deportista] -> Zona -> Int que
 dada una lista de deportistas xs, y una zona z, devuelve la cantidad de futbolistas
 incluidos en xs que juegan en la zona z. Programa contar_futbolistas sin usar
-igualdad, utilizando pattern matching.
-e) ¿La funcion anterior usa filter? Si no es ası, reprogramala para usarla.
+igualdad, utilizando pattern matching. -}
+
+
+{- e) ¿La funcion anterior usa filter? Si no es ası, reprogramala para usarla.-}
+
+
+{-
 5. Definicion de clases.
 a) Implementa la funcion sonidoNatural como esta definida arriba.
 b) Definir el tipo enumerado Alteracion que consta de los constructores Bemol, Natural
