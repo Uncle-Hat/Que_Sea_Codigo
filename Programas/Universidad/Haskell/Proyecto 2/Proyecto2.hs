@@ -107,32 +107,48 @@ estrictamente necesario -}
 
 {- a) Implementa el tipo Deportista y todos sus tipos accesorios (NumCamiseta, Altura, Zona, etc) tal como estan definidos arriba. -}
 
-data Deportista = Ajedrecista -- Constructor sin argumentos
-| Ciclista Modalidad -- Constructor con un argumento
-| Velocista Altura -- Constructor con un argumento
-| Tenista TipoReves ManoHabil Altura -- Constructor con tres argumentos
-| Futbolista Zona NumCamiseta PiernaHabil Altura -- Constructor con ...
-
 -- Sinonimo de Tipo
 type Altura = Int
 type NumCamiseta = Int
 
---Sinónimo
+-- Tipos algebraicos sin parametros
+data Zona = Arco | Defensa | Mediocampo | Delantera 
+data TipoReves = DosManos | UnaMano
+data Modalidad = Carretera | Pista | Monte | BMX
+data PiernaHabil = Izquierda | Derecha
+
+-- Sinónimo
 type ManoHabil = PiernaHabil
 
-{- b) ¿Cual es el tipo del constructor Ciclista? -}
+-- Deportista es un tipo algebraico con constructores parametricos
+data Deportista = Ajedrecista | Ciclista Modalidad | Velocista Altura | Tenista TipoReves ManoHabil Altura | Futbolista Zona NumCamiseta PiernaHabil Altura
 
+
+{- b) ¿Cual es el tipo del constructor Ciclista? -}
+-- Ciclista es del tipo Deportista
 
 {- c) Programa la funcion contar_velocistas :: [Deportista] -> Int que dada una
 lista de deportistas xs, devuelve la cantidad de velocistas que hay dentro de xs.
 Programa contar_velocistas sin usar igualdad, utilizando pattern matching. -}
+contar_velocistas :: [Deportista] -> Int
+contar_velocistas [] = 0
+contar_velocistas (Velocista n:xs) = 1 + contar_velocistas xs
+contar_velocistas (n:xs) = 0 + contar_velocistas xs
 
+-- *Main> contar_velocistas [Velocista 5]
+-- 1
+-- *Main> contar_velocistas [Velocista 1]
+-- 1
+-- *Main> contar_velocistas [Velocista 4, Velocista 8, Ciclista Carretera]
+-- 2
 
 {- d) Programa la funcion contar_futbolistas :: [Deportista] -> Zona -> Int que
 dada una lista de deportistas xs, y una zona z, devuelve la cantidad de futbolistas
 incluidos en xs que juegan en la zona z. Programa contar_futbolistas sin usar
 igualdad, utilizando pattern matching. -}
-
+contar_futbolistas :: [Deportista] -> Zona -> Int
+contar_futbolistas [] _ = 0
+contar_futbolistas (x:xs) z =
 
 {- e) ¿La funcion anterior usa filter? Si no es ası, reprogramala para usarla.-}
 

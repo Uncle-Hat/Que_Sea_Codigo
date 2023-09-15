@@ -30,4 +30,6 @@ diaSig DO = Lu
 diaSig d = succ d
 datFig = Circulo (Float, Float) 
         |Rect (Float,Float) (Float,Float)
-
+--
+--
+--
