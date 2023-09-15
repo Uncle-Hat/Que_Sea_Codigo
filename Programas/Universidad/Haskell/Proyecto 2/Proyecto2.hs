@@ -147,11 +147,27 @@ dada una lista de deportistas xs, y una zona z, devuelve la cantidad de futbolis
 incluidos en xs que juegan en la zona z. Programa contar_futbolistas sin usar
 igualdad, utilizando pattern matching. -}
 contar_futbolistas :: [Deportista] -> Zona -> Int
-contar_futbolistas [] _ = 0
-contar_futbolistas (x:xs) z =
+contar_futbolistas [] z = 0
+contar_futbolistas (x:xs) z | esfutz z x = 1 + contar_futbolistas xs z
+                            |otherwise = contar_futbolistas xs z
+
+esfutz :: Zona -> Deportista -> Bool
+esfutz Arco (Futbolista Arco _ _ _) = True
+esfutz Defensa (Futbolista Defensa _ _ _) = True
+esfutz Mediocampo (Futbolista Mediocampo _ _ _) = True
+esfutz Delantera (Futbolista Delantera _ _ _) = True
+esfutz _ _ = False
+
+-- *Main> contar_futbolistas [Futbolista Arco 7 Derecha 5, Futbolista Mediocampo 8 Izquierda 10] Arco
+-- 1
+-- *Main> contar_futbolistas [Futbolista Arco 7 Derecha 5, Futbolista Mediocampo 8 Izquierda 10] Mediocampo
+-- 1
+-- *Main> contar_futbolistas [Futbolista Arco 7 Derecha 5, Futbolista Mediocampo 8 Izquierda 10] Defensa
+-- 0
 
 {- e) ¿La funcion anterior usa filter? Si no es ası, reprogramala para usarla.-}
-
+contar_futbolistasFil :: [Deportista] -> Zona -> Int
+contar_futbolistasFil (Futbolista z _ _ _:xs) t = length(filter (Futbolista t) xs)
 
 {-
 5. Definicion de clases.
@@ -193,7 +209,6 @@ b) Programa las siguientes funciones:
 1) la_long :: ListaAsoc a b -> Int que devuelve la cantidad de datos en una
 lista.
 2) la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b, que devuelve la concatenacion de dos listas de asociaciones.
-7
 3) la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b, que
 agrega un nodo a la lista de asociaciones si la clave no esta en la lista, o actualiza
 el valor si la clave ya se encontraba.
