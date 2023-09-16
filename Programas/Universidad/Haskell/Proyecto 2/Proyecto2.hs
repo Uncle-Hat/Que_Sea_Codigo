@@ -12,11 +12,13 @@ funciones para manipular expresiones que utilizan estos tipos.-}
 -- 1. Tipos enumerados.
 
 -- a) Implementa el tipo Carrera como esta definido arriba.
+
 data Carrera = Matematica | Fisica | Computacion | Astronomia
 
 {- b) Definı la siguiente funcion, usando pattern matching: titulo :: Carrera -> String
 que devuelve el nombre completo de la carrera en forma de string. Por ejemplo, para el
 constructor Matematica, debe devolver ”Licenciatura en Matematica”. -}
+
 titulo :: Carrera -> String
 titulo Matematica = "Licenciatura en Matematica"
 titulo Fisica = "Licenciatura en Fisica"
@@ -74,6 +76,7 @@ sean validas y no generen error. Ayuda: usar deriving con multiples clases. -}
 {- a) Definir usando polimorfismo ad hoc la funcion minimoElemento que calcula (de manera
 recursiva) cual es el menor valor de una lista de tipo [a]. Asegurarse que solo este
 definida para listas no vacıas. -}
+
 minimoElemento :: Ord a => [a] -> a 
 minimoElemento [x] = x
 minimoElemento (x:xs) = x `min` (minimoElemento xs)
@@ -87,6 +90,7 @@ minimoElemento (x:xs) = x `min` (minimoElemento xs)
 sea el de la lista vacıa. Para ello revisar la clase Bounded.
 Ayuda: Para probar esta funcion dentro de ghci con listas vacıas, indicar el tipo concreto con tipos de la clase Bounded, por ejemplo: ([1,5,10]::[Int]), ([]::[Bool]),
 etc.-}
+
 minimoElemento' :: (Bounded a, Ord a) => [a] -> a
 minimoElemento' [] = maxBound
 minimoElemento' (x:xs) = min x (minimoElemento' xs) 
@@ -130,6 +134,7 @@ data Deportista = Ajedrecista | Ciclista Modalidad | Velocista Altura | Tenista 
 {- c) Programa la funcion contar_velocistas :: [Deportista] -> Int que dada una
 lista de deportistas xs, devuelve la cantidad de velocistas que hay dentro de xs.
 Programa contar_velocistas sin usar igualdad, utilizando pattern matching. -}
+
 contar_velocistas :: [Deportista] -> Int
 contar_velocistas [] = 0
 contar_velocistas (Velocista n:xs) = 1 + contar_velocistas xs
@@ -146,6 +151,7 @@ contar_velocistas (n:xs) = 0 + contar_velocistas xs
 dada una lista de deportistas xs, y una zona z, devuelve la cantidad de futbolistas
 incluidos en xs que juegan en la zona z. Programa contar_futbolistas sin usar
 igualdad, utilizando pattern matching. -}
+
 contar_futbolistas :: [Deportista] -> Zona -> Int
 contar_futbolistas [] z = 0
 contar_futbolistas (x:xs) z | esfutz z x = 1 + contar_futbolistas xs z
@@ -166,12 +172,27 @@ esfutz _ _ = False
 -- 0
 
 {- e) ¿La funcion anterior usa filter? Si no es ası, reprogramala para usarla.-}
-contar_futbolistasFil :: [Deportista] -> Zona -> Int
-contar_futbolistasFil (Futbolista z _ _ _:xs) t = length(filter (Futbolista t) xs)
+
+contar_futbolistasF :: [Deportista] -> Zona -> Int
+contar_futbolistasF xs checkzone = length (filter (esfutz checkzone) xs )
+
+-- *Main> contar_futbolistasF [Futbolista Arco 7 Derecha 5, Futbolista Mediocampo 8 Izquierda 10] Arco
+-- 1 
+
+{- 5. Definicion de clases. -}
+{- a) Implementa la funcion sonidoNatural como esta definida arriba. -}
+
+sonidoNatural : : NotaBasica -> Int
+sonidoNatural Do = 0
+sonidoNatural Re = 2
+sonidoNatural Mi = 4
+sonidoNatural Fa = 5
+sonidoNatural Sol = 7
+sonidoNatural La = 9
+sonidoNatural Si = 11
+
 
 {-
-5. Definicion de clases.
-a) Implementa la funcion sonidoNatural como esta definida arriba.
 b) Definir el tipo enumerado Alteracion que consta de los constructores Bemol, Natural
 y Sostenido.
 c) Definir el tipo NotaMusical que consta de un unico constructor llamado Nota que
