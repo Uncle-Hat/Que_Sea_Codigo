@@ -120,20 +120,20 @@ estrictamente necesario -}
 {- a) Implementa el tipo Deportista y todos sus tipos accesorios (NumCamiseta, Altura, Zona, etc) tal como estan definidos arriba. -}
 
 -- Sinonimo de Tipo
-type Altura = Int
-type NumCamiseta = Int
+type Altura = Int 
+type NumCamiseta = Int 
 
 -- Tipos algebraicos sin parametros
-data Zona = Arco | Defensa | Mediocampo | Delantera 
-data TipoReves = DosManos | UnaMano
-data Modalidad = Carretera | Pista | Monte | BMX
-data PiernaHabil = Izquierda | Derecha
+data Zona = Arco | Defensa | Mediocampo | Delantera deriving Show
+data TipoReves = DosManos | UnaMano deriving Show
+data Modalidad = Carretera | Pista | Monte | BMX deriving Show
+data PiernaHabil = Izquierda | Derecha deriving Show
 
 -- Sinónimo
-type ManoHabil = PiernaHabil
+type ManoHabil = PiernaHabil 
 
 -- Deportista es un tipo algebraico con constructores parametricos
-data Deportista = Ajedrecista | Ciclista Modalidad | Velocista Altura | Tenista TipoReves ManoHabil Altura | Futbolista Zona NumCamiseta PiernaHabil Altura
+data Deportista = Ajedrecista | Ciclista Modalidad | Velocista Altura | Tenista TipoReves ManoHabil Altura | Futbolista Zona NumCamiseta PiernaHabil Altura deriving Show
 
 
 {- b) ¿Cual es el tipo del constructor Ciclista? -}
@@ -257,38 +257,113 @@ instance Ord NotaMusical
 -- *Main> (Nota Sol Natural) <= (Nota Re Natural)
 -- False
 
-{-
-6. Tipos enumerados con polimorfismo.
-a) Definir la funcion primerElemento que devuelve el primer elemento de una lista no
+
+{- 6. Tipos enumerados con polimorfismo.-}
+
+
+{- a) Definir la funcion primerElemento que devuelve el primer elemento de una lista no
 vacıa, o Nothing si la lista es vacıa.
-primerElemento : : [ a ] −> Maybe a
-7. Tipos recursivos.
-a) Programa las siguientes funciones:
-1) atender :: Cola -> Maybe Cola, que elimina de la cola a la persona que esta
+primerElemento :: [a] −> Maybe a -}
+
+primerElemento :: [a] -> Maybe a
+primerElemento (x:xs) = Just x
+primerElemento [] = Nothing
+
+-- *Main> primerElemento [5,4,3,2,1]
+-- Just 5
+-- *Main> primerElemento []
+-- Nothing
+
+
+{- 7. Tipos recursivos.-}
+
+
+{- a) Programa las siguientes funciones: -}
+
+data Cola = VaciaC | Encolada Deportista Cola deriving Show
+
+{- 1) atender :: Cola -> Maybe Cola, que elimina de la cola a la persona que esta
 en la primer posicion de una cola, por haber sido atendida. Si la cola esta vacıa,
-devuelve Nothing.
-2) encolar :: Deportista -> Cola -> Cola, que agrega una persona a una cola
-de deportistas, en la ultima posicion.
-3) busca :: Cola -> Zona -> Maybe Deportista, que devuelve el/la primera
+devuelve Nothing. -}
+
+atender :: Cola -> Maybe Cola 
+atender VaciaC = Nothing
+atender (Encolada _ cola) = Just cola
+
+--Sinonimo
+
+miCola = Encolada (Futbolista Defensa 10 Izquierda 180) VaciaC
+ejemploCola = Encolada (Futbolista Mediocampo 3 Derecha 8) VaciaC
+
+-- *Main> atender miCola
+-- Just VaciaC
+
+{- 2) encolar :: Deportista -> Cola -> Cola, que agrega una persona a una cola
+de deportistas, en la ultima posicion. -}
+
+encolar :: Deportista -> Cola -> Cola
+encolar newdep VaciaC = Encolada newdep VaciaC
+encolar newdep (Encolada dep cola) = Encolada newdep (Encolada dep cola)
+
+-- *Main> encolar (Ajedrecista) ejemploCola
+-- Encolada Ajedrecista (Encolada (Futbolista Mediocampo 3 Derecha 8) VaciaC)
+
+{- 3) busca :: Cola -> Zona -> Maybe Deportista, que devuelve el/la primera
 futbolista dentro de la cola que juega en la zona que se corresponde con el segundo
-parametro. Si no hay futbolistas jugando en esa zona devuelve Nothing.
-b) ¿A que otro tipo se parece Cola?
-8. Tipos recursivos y polimorficos
-a) ¿Como se debe instanciar el tipo ListaAsoc para representar la informacion almacenada
-en una guıa telefonica?
-b) Programa las siguientes funciones:
-1) la_long :: ListaAsoc a b -> Int que devuelve la cantidad de datos en una
-lista.
-2) la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b, que devuelve la concatenacion de dos listas de asociaciones.
-3) la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b, que
+parametro. Si no hay futbolistas jugando en esa zona devuelve Nothing. -}
+
+busca :: Cola -> Zona -> Maybe Deportista
+busca VaciaC cola = Nothing
+busca (Encolada dep cola) zona = 
+    if esfutz zona dep
+        then Just dep
+        else busca cola zona
+
+-- *Main> busca miCola Arco
+-- Nothing
+-- *Main> busca miCola Defensa
+-- Just (Futbolista Defensa 10 Izquierda 180)
+
+
+{- b) ¿A que otro tipo se parece Cola? -}
+--El tipo Cola es similar al operador lista tambien descrito como enlistar (:), ya que tiene un
+--caso base vacío y un caso en que carga con argumentos, a su vez mediante la función de encolar
+--podemos sumar elementos del tipo Cola a las "Listas"
+
+
+{- 8. Tipos recursivos y polimorficos-}
+
+
+{- a) ¿Como se debe instanciar el tipo ListaAsoc para representar la informacion almacenada
+en una guıa telefonica? -}
+
+
+{- b) Programa las siguientes funciones: -}
+
+
+{- 1) la_long :: ListaAsoc a b -> Int que devuelve la cantidad de datos en una
+lista. -}
+
+
+{- 2) la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b, que devuelve la concatenacion de dos listas de asociaciones.-}
+
+
+{- 3) la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b, que
 agrega un nodo a la lista de asociaciones si la clave no esta en la lista, o actualiza
-el valor si la clave ya se encontraba.
-4) la_pares :: ListaAsoc a b -> [(a, b)] que transforma una lista de asociaciones en una lista de pares clave-dato.
-5) la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b que dada una lista
+el valor si la clave ya se encontraba. -}
+
+
+{- 4) la_pares :: ListaAsoc a b -> [(a, b)] que transforma una lista de asociaciones en una lista de pares clave-dato.-}
+
+
+{- 5) la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b que dada una lista
 y una clave devuelve el dato asociado, si es que existe. En caso contrario devuelve
-Nothing.
-6) la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b que dada
-una clave a elimina la entrada en la lista.
+Nothing. -}
+
+
+{- 6) la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b que dada
+una clave a elimina la entrada en la lista. -} 
+{- 
 9. (Punto *)
 10. (Punto *)
 -}
