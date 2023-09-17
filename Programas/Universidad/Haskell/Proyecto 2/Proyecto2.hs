@@ -337,32 +337,82 @@ busca (Encolada dep cola) zona =
 {- a) ¿Como se debe instanciar el tipo ListaAsoc para representar la informacion almacenada
 en una guıa telefonica? -}
 
+data ListaAsoc a b = Vacia | Nodo a b ( ListaAsoc a b ) deriving Show
+type Diccionario = ListaAsoc String String 
+type Padron = ListaAsoc Int String 
 
-{- b) Programa las siguientes funciones: -}
+
+{-------------------- b) Programa las siguientes funciones: -----------}
 
 
 {- 1) la_long :: ListaAsoc a b -> Int que devuelve la cantidad de datos en una
 lista. -}
+la_long :: ListaAsoc a b -> Int
+la_long Vacia = 0
+la_long (Nodo a b (list)) = 1 + la_long list
 
+--Sinonimo
+guiaCasaPedro :: Padron
+guiaCasaPedro = Nodo 4867573 "Alex" (Nodo 9033368 "Bemo" Vacia)
+casaDamian :: Padron
+casaDamian = Nodo 200692 "Roberto Musso" (Nodo 9876543 "Santiago Tavela" Vacia) 
+
+-- *Main> la_long guiaCasaPedro 
+-- 2
 
 {- 2) la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b, que devuelve la concatenacion de dos listas de asociaciones.-}
+la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b
+la_concat Vacia list = list
+la_concat (Nodo a b (lista)) list = (Nodo a b (la_concat list lista))
 
+-- *Main> la_concat guiaCasaPedro casaDamian 
+-- Nodo 4867573 "Alex" (Nodo 200692 "Roberto Musso" (Nodo 9033368 "Bemo" (Nodo 9876543 "Santiago Tavela" Vacia)))
 
 {- 3) la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b, que
 agrega un nodo a la lista de asociaciones si la clave no esta en la lista, o actualiza
 el valor si la clave ya se encontraba. -}
+la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b
+la_agregar Vacia a1 b1 = (Nodo a1 b1 Vacia)
+la_agregar (Nodo a b l) a1 b1 =
+    case a of 
+        a | a == a1 -> (Nodo a b1 l)
+        _ -> (Nodo a b (la_agregar l a1 b1))
 
+-- *Main> la_agregar guiaCasaPedro 6161616 "Videla"
+-- Nodo 4867573 "Alex" (Nodo 9033368 "Bemo" (Nodo 6161616 "Videla" Vacia))
 
 {- 4) la_pares :: ListaAsoc a b -> [(a, b)] que transforma una lista de asociaciones en una lista de pares clave-dato.-}
+la_pares :: ListaAsoc a b -> [(a, b)]
+la_pares Vacia = []
+la_pares (Nodo a b l) = (a, b):la_pares l
 
+-- *Main> la_pares guiaCasaPedro 
+-- [(4867573,"Alex"),(9033368,"Bemo")]
 
 {- 5) la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b que dada una lista
 y una clave devuelve el dato asociado, si es que existe. En caso contrario devuelve
 Nothing. -}
 
+la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b
+la_busca Vacia numero = Nothing
+la_busca (Nodo a b lista) numero |a == numero = Just b
+                                |otherwise = la_busca lista numero 
+
+-- *Main> la_busca casaDamian 200692
+-- Just "Roberto Musso"
 
 {- 6) la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b que dada
-una clave a elimina la entrada en la lista. -} 
+una clave a elimina la entrada en la lista. -}
+
+la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b 
+la_borrar clave Vacia = Vacia
+la_borrar clave (Nodo b c l)    | b == clave = la_borrar clave l
+                                | otherwise = (Nodo b c (la_borrar clave l))
+
+
+-- *Main> la_borrar 200692 casaDamian 
+-- Nodo 9876543 "Santiago Tavela" Vacia
+
 {- 
 9. (Punto *)
 10. (Punto *)
