@@ -19,3 +19,4 @@ data Deportista = Ajedrecista | Ciclista Modalidad | Velocista Altura | Tenista 
 [Ajedrecista, Velocista 1 , Tenista DosManos Izquierda 2 ,Futbolista Arco 7 Derecha 5, Ajedrecista, Ajedrecista, Futbolista Defensa 10 Derecha 2]
 [Velocista 1,Velocista 4,Velocista 7,Ajedrecista,Ajedrecista]
 [Futbolista Arco 7 Derecha 5, Futbolista Mediocampo 8 Izquierda 10]
+

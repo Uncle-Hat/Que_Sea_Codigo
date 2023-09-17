@@ -1,15 +1,19 @@
-{-1. Objetivo
-En este proyecto definiremos nuestros propios tipos de datos. La importancia de poder definir
+{-1. Objetivo-}
+
+{-En este proyecto definiremos nuestros propios tipos de datos. La importancia de poder definir
 nuevos tipos de datos reside en la facilidad con la que podemos modelar problemas y resolverlos
 usando las mismas herramientas que para los tipos pre-existentes.
 El objetivo de este proyecto es aprender a declarar nuevos tipos de datos en Haskell y definir
-funciones para manipular expresiones que utilizan estos tipos.-}
+funciones para manipular expresiones que utilizan estos tipos. -}
 
 
--- 2. Ejercicios
+
+{- -- 2. Ejercicios ---------------------------------------- -}
 
 
--- 1. Tipos enumerados.
+
+{- -- 1. Tipos enumerados. ---------- -}
+
 
 -- a) Implementa el tipo Carrera como esta definido arriba.
 
@@ -59,7 +63,7 @@ cifradoAmericano Si = 'B'
 -- 'F'
 
 
--- 2. Clases de tipos.
+{- -- 2. Clases de tipos.-}
 
 {- a) Completar la definicion del tipo NotaBasica para que las expresiones
 *Main> Do <= Re
@@ -72,7 +76,9 @@ sean validas y no generen error. Ayuda: usar deriving con multiples clases. -}
 -- True
 
 
---3-Polimorfismo ad hoc
+{- --3-Polimorfismo ad hoc-------------- -}
+
+
 {- a) Definir usando polimorfismo ad hoc la funcion minimoElemento que calcula (de manera
 recursiva) cual es el menor valor de una lista de tipo [a]. Asegurarse que solo este
 definida para listas no vacıas. -}
@@ -107,7 +113,9 @@ estrictamente necesario -}
 -- *Main> minimoElemento [Fa,La,Sol,Re,Fa]
 -- Re
 
+
 {-4. Sinonimo de tipos; constructores con parametros.-}
+
 
 {- a) Implementa el tipo Deportista y todos sus tipos accesorios (NumCamiseta, Altura, Zona, etc) tal como estan definidos arriba. -}
 
@@ -179,10 +187,13 @@ contar_futbolistasF xs checkzone = length (filter (esfutz checkzone) xs )
 -- *Main> contar_futbolistasF [Futbolista Arco 7 Derecha 5, Futbolista Mediocampo 8 Izquierda 10] Arco
 -- 1 
 
+
 {- 5. Definicion de clases. -}
+
+
 {- a) Implementa la funcion sonidoNatural como esta definida arriba. -}
 
-sonidoNatural : : NotaBasica -> Int
+sonidoNatural :: NotaBasica -> Int
 sonidoNatural Do = 0
 sonidoNatural Re = 2
 sonidoNatural Mi = 4
@@ -191,23 +202,62 @@ sonidoNatural Sol = 7
 sonidoNatural La = 9
 sonidoNatural Si = 11
 
+{- b) Definir el tipo enumerado Alteracion que consta de los constructores Bemol, Natural y Sostenido. -}
 
-{-
-b) Definir el tipo enumerado Alteracion que consta de los constructores Bemol, Natural
-y Sostenido.
-c) Definir el tipo NotaMusical que consta de un unico constructor llamado Nota que
+data Alteracion = Bemol | Natural | Sostenido 
+
+{- c) Definir el tipo NotaMusical que consta de un unico constructor llamado Nota que
 toma dos parametros. El primer parametro es de tipo NotaBasica y el segundo de tipo
 Alteracion. De esta manera cuando se quiera representar una nota alterada se puede
 usar como segundo parametro del constructor un Bemol o Sostenido y si se quiere
-representar una nota sin alteraciones se usa Natural como segundo parametro.
-d) Definı la funcion sonidoCromatico :: NotaMusical -> Int que devuelve el sonido
+representar una nota sin alteraciones se usa Natural como segundo parametro -}
+
+data NotaMusical = Nota NotaBasica Alteracion
+
+{- d) Definı la funcion sonidoCromatico :: NotaMusical -> Int que devuelve el sonido
 de una nota, incrementando en uno su valor si tiene la alteracion Sostenido, decrementando en uno si tiene la alteracion Bemol y dejando su valor intacto si la alteracion
-es Natural
-e) Incluı el tipo NotaMusical a la clase Eq de manera tal que dos notas que tengan el
-mismo valor de sonidoCromatico se consideren iguales.
-f ) Incluı el tipo NotaMusical a la clase Ord definiendo el operador <=. Se debe definir
+es Natural -}
+
+sonidoCromatico :: NotaMusical -> Int
+sonidoCromatico (Nota nb Sostenido)  = (sonidoNatural nb) + 1
+sonidoCromatico (Nota nb Natural)  = (sonidoNatural nb)
+sonidoCromatico (Nota nb Bemol)  = (sonidoNatural nb) - 1
+
+-- *Main> sonidoCromatico (Nota Re Sostenido)
+-- 3
+-- *Main> sonidoCromatico (Nota Sol Bemol)
+-- 6
+
+{- e) Incluı el tipo NotaMusical a la clase Eq de manera tal que dos notas que tengan el
+mismo valor de sonidoCromatico se consideren iguales-}
+
+instance Eq NotaMusical 
+    where 
+        a == b = sonidoCromatico a == sonidoCromatico b
+
+-- *Main> sonidoCromatico (Nota Mi Bemol)
+-- 3
+-- *Main> sonidoCromatico (Nota Re Sostenido)
+-- 3
+-- *Main> (Nota Re Sostenido) == (Nota Mi Bemol)
+-- True
+
+{- f ) Incluı el tipo NotaMusical a la clase Ord definiendo el operador <=. Se debe definir
 que una nota es menor o igual a otra si y solo si el valor de sonidoCromatico para la
-primera es menor o igual al valor de sonidoCromatico para la segunda.
+primera es menor o igual al valor de sonidoCromatico para la segunda. -}
+
+instance Ord NotaMusical
+    where
+        a<=b = sonidoCromatico a <= sonidoCromatico b
+
+-- *Main> sonidoCromatico (Nota Sol Natural)
+-- 7
+-- *Main> sonidoCromatico (Nota Re Natural)
+-- 2
+-- *Main> (Nota Sol Natural) <= (Nota Re Natural)
+-- False
+
+{-
 6. Tipos enumerados con polimorfismo.
 a) Definir la funcion primerElemento que devuelve el primer elemento de una lista no
 vacıa, o Nothing si la lista es vacıa.
