@@ -16,6 +16,8 @@ booleanas.
 
 int main(void)
 {
+    bool t = true;
+    bool n = false;
     int x, y, z; 
     printf("Ingrese un valor para x tal que x sea un numero par mayor a 4\n");
     scanf("%d", &x);
