@@ -24,4 +24,5 @@ int main(void)
     printf("ingrese un valor para z\n");
     scanf("%d", &z);
     printf("%d\n",x % 4 == 0);
+    
 }
