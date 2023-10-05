@@ -14,17 +14,23 @@ booleanas.
 #include <stdio.h>
 #include <stdbool.h>
 
-int main(void)
-{
-    bool t = true;
-    bool n = false;
-    int x, y, z; 
-    printf("Ingrese un valor para x tal que x sea un numero par mayor a 4\n");
-    scanf("%d", &x);
-    printf("ingrese un valor para y\n");
-    scanf("%d", &y);
-    printf("ingrese un valor para z\n");
-    scanf("%d", &z);
-    printf("%d\n",x % 4 == 0);
-    
+int main() {    
+    int x,y,z;
+    printf("Ingrese el valor de x en enteros\n");
+    scanf("%d",&x);
+    printf("Ingrese el valor de y en enteros\n");
+    scanf("%d",&y);
+    printf("Ingrese el valor de z en enteros\n");
+    scanf("%d",&z);
+    bool b,w;
+    printf("Ingrese el valor de b en booleanos (0 False, 1 True)\n");
+    scanf("%d",&b);
+    printf("Ingrese el valor de w en booleanos (0 False, 1 True)\n");
+    scanf("%d",&w);
+    bool bol1, bol2, bol3;
+    bol1 = x % 4 == 0;
+    bol2 = x + y == 0 && y - x == (-1) * z ;
+    bol3 = !b && w;
+    printf("Los resultados son: %d\n%d\n%d\n",bol1,bol2,bol3);
+    return 0;
 }
