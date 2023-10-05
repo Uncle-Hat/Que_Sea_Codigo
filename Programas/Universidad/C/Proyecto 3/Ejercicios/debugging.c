@@ -27,10 +27,32 @@ int main() {
     scanf("%d",&b);
     printf("Ingrese el valor de w en booleanos (0 False, 1 True)\n");
     scanf("%d",&w);
+    
     bool bol1, bol2, bol3;
-    bol1 = x % 4 == 0;
-    bol2 = x + y == 0 && y - x == (-1) * z ;
-    bol3 = !b && w;
+    
+    if (x % 4 == 0)
+    {
+        bol1=true;
+    }
+    else {
+        bol1=false;
+    }
+    if (x + y == 0 && y - x == (-1) * z)
+    {
+        bol2=true;
+    }
+    else{
+        bol2=false;
+    }
+    if (!b && w)
+    {
+        bol3=true;
+    }
+    else{
+        bol3=false;
+    }
+    
     printf("Los resultados son: %d\n%d\n%d\n",bol1,bol2,bol3);
+    
     return 0;
 }
