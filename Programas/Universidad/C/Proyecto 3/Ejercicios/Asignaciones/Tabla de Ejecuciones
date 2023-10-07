@@ -1,12 +1,12 @@
 /*
-|      programa      | usuario ingresa un σ0 | produce una salida σ |
-1.a ejecución 1      |           2           |          5           |
-1.a ejecución 2      |           1           |          5           |
-1.a ejecución 3      |         99999         |          5           |
-1.b ejecución 1      |       x:=10, y:=12    |       x=22, y=24     |
-1.b ejecución 2      |       x:=1, y:=0      |       x=1, y=0       |
-1.b ejecución 3      |     x:=123, y:=345    |     x=468, y=690     |
-1.c ejecución 1      |       x:=10, y:=13    |      x=26, y=36      |
-1.c ejecución 2      |       x:=69, y:=71    |      x=142, y=211    |
-1.c ejecución 3      |      x:=96, y:=5678   |     x=11356, y=11452 |
+|      programa      | usuario ingresa un σ0 | produce una salida σ1|
+1.a ejecución 1      |     2                 |   5                  |
+1.a ejecución 2      |     1                 |   5                  |
+1.a ejecución 3      |     99999             |   5                  |
+1.b ejecución 1      |     x:=10, y:=12      |   x=22, y=24         |
+1.b ejecución 2      |     x:=1, y:=0        |   x=1, y=0           |
+1.b ejecución 3      |     x:=123, y:=345    |   x=468, y=690       |
+1.c ejecución 1      |     x:=10, y:=13      |   x=26, y=36         |
+1.c ejecución 2      |     x:=69, y:=71      |   x=142, y=211       |
+1.c ejecución 3      |     x:=96, y:=5678    |   x=11356, y=11452   |
 */

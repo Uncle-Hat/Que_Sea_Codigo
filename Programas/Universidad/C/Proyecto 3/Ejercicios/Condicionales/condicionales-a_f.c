@@ -1,4 +1,5 @@
-/* e) Var x, y : Int;
+/* 
+e) Var x, y : Int;
 [σ0 : (x → 3, y → 1)]
 if x ≥ y →
 [σ1:  . . . ] 
@@ -9,7 +10,8 @@ x ≤ y →
 x := 2
 [σ'2:  . . .]
 fi
-[σ3:  . . . ]  */
+[σ3:  . . . ]  
+*/
 
 
 
@@ -31,7 +33,10 @@ int main(void){
         printf("El valor de y es mayor al valor de x, por lo tanto transformamos a x en %d\n",x);
     }
 }
-/* 
+
+
+
+/*
 Dale valor a x
 3
 Dale valor a y
