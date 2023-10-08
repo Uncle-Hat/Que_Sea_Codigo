@@ -3,23 +3,22 @@
 
 int main(void)
 {
-    int x,y,i;
+    int x, y, i;
     printf("Dale valor a x\n");
-    scanf("%d",&x);
+    scanf("%d", &x);
     printf("Dale valor a  y\n");
-    scanf("%d",&y);
+    scanf("%d", &y);
     printf("Dale valor a i\n");
-    scanf("%d",&i);
+    scanf("%d", &i);
     do
     {
-        x=x-y;
-        i=i+1;
-        printf("Iteraciones de estado :\nx=%d, y=%d, i=%d\n",x,y,i);
-    } while (x>=y);
+        x = x - y;
+        i = i + 1;
+        printf("Iteraciones de estado :\nx=%d, y=%d, i=%d\n", x, y, i);
+    } while (x >= y);
 }
 
-
-/* 
+/*
 Dale valor a x
 13
 Dale valor a  y
