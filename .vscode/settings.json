@@ -7,5 +7,8 @@
     "cmake.configureOnOpen": false,
     "terminal.explorerKind": "integrated",
     "terminal.integrated.cursorWidth": 4,
-    "terminal.integrated.smoothScrolling": true
+    "terminal.integrated.smoothScrolling": true,
+    "files.associations": {
+        "stdio.h": "c"
+    }
 }
