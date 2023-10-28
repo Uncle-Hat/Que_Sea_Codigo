@@ -9,6 +9,7 @@
     "terminal.integrated.cursorWidth": 4,
     "terminal.integrated.smoothScrolling": true,
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "assert.h": "c"
     }
 }
