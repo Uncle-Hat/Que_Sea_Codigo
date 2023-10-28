@@ -24,7 +24,7 @@ void pedir_arreglo(int n_max, int a[]) {
 void imprimir_arreglo(int n_max, int a[]) {
     for (int i = 0; i < n_max; i++) //Declaración de i = 0, empieza a sumar uno hasta que llega al n_max
     {
-        printf("%d ", a[i]);
+        printf("%d", a[i]);
     }
     printf("\n");
 }
