@@ -13,12 +13,11 @@ En caso que se elija la función existe_multiplo() se le debe pedir al usuario u
 */
 
 #include <stdio.h>
-#include <assert.h>
 #include <stdbool.h>
+#include <assert.h>
 
 void pedir_arreglo(int tam, int a[])
 {
-    assert(tam > 0);
     printf("Ingrese los valores del arreglo:\n");
     for (int i = 0; i < tam; i++)
     {
@@ -29,39 +28,30 @@ void pedir_arreglo(int tam, int a[])
 
 bool todos_pares(int tam, int a[])
 {
-    int i = 0;
-    int auxt = 0;
-    for (i = 0; i < tam; i++)
+    for (int i = 0; i < tam; i++)
     {
-        if (a[i] % 2 == 0)
+        if (a[i] % 2 != 0)
         {
-            true;
-        }
-        else
-        {
-            false;
-            break;
+            return false; //Si los elementos no son pares, que se vuelva False
         }
     }
+    return true; //Podemos saber que todos los elementos son pares
 }
+
 bool existe_multiplo(int m, int tam, int a[])
 {
-    int i = 0;
     printf("De qué número quieres buscar múltiplo?");
     scanf("%d", &m);
-    for (i = 0; i < tam; i++)
+    for (int i = 0; i < tam; i++)
     {
-        if (a[i] % m != 0)
+        if (a[i] % m == 0)
         {
-            printf("No existe múltiplo\n");
-            break;
-        }
-        else
-        {
-            printf("Existe múltiplo");
-            break;
+            printf("Existe múltiplo\n");
+            return true; // Encuentra un múltiplo entonces devuelve true
         }
     }
+    printf("No existe múltiplo\n");
+    return false; //No encuentra múltiplo, devuelve falso
 }
 
 int main()
@@ -69,17 +59,18 @@ int main()
     int tam, m;
     printf("Coloque el tamaño máximo del arreglo: \n");
     scanf("%d", &tam);
+    assert(tam>0);
     int a[tam];
     pedir_arreglo(tam, a);
     printf("Ahora puedes elegir entre dos programas:\n");
     printf("(1) Todos Pares\n--Revisa que todos los elementos del arreglo sean pares\n");
-    printf("(2)Existe multiplo\n--Revisa si existe un múltiplo de un numero dentro del arreglo\n");
+    printf("(2) Existe multiplo\n--Revisa si existe un múltiplo de un numero dentro del arreglo\n");
     int e;
     scanf("%d", &e);
+
     if (e == 1)
     {
-        int b = todos_pares(tam, a);
-        if (b == 1)
+        if (todos_pares(tam, a))
         {
             printf("En el arreglo todos los numeros son pares\n");
         }
@@ -90,16 +81,12 @@ int main()
     }
     else if (e == 2)
     {
-        int auxmul = existe_multiplo(m, tam, a);
-        if (auxmul == 1)
-        {
-            printf("Existe múltiplo\n");
-        }
+        existe_multiplo(m, tam, a);
     }
     else
     {
         printf("Coloca una variable válida\n");
-        printf("Se ha salido del programa con éxito");
-    };
+    }
+    printf("El programa ha terminado con éxito");
     return 0;
 }
