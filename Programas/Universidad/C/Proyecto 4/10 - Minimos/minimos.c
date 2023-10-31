@@ -22,6 +22,7 @@ Pueden definir alguna funci ́on auxiliar si les resulta necesario.
 
 NOTA: Investigar las constantes definidas en la librer ́ia <limits.h> para definir el
 nutro de la operaci ́on m ́inimo */
+
 #include <stdio.h>
 #include <limits.h>
 
