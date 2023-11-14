@@ -5,6 +5,7 @@
 --a)
 esCero :: Int -> Bool      -- verifica si un entero es igual a 0.
 esCero x = x == 0
+
 {-
 *Main> esCero 5
 False
@@ -15,6 +16,7 @@ True
 --b) 
 esPositivo :: Int -> Bool  -- verifica si un entero es estrictamente mayor a 0.
 esPositivo x = x>0
+
 {- *Main> esPositivo 5
 True
 *Main> esPositivo (-3)
@@ -39,6 +41,7 @@ False -}
 valorAbsoluto :: Int -> Int -- devuelve el valor absoluto de un entero ingresado
 valorAbsoluto x | x<0 = (-1)*x
                 | x>=0 = x
+
 {-
 *Main> valorAbsoluto (-5)
 5
@@ -67,6 +70,7 @@ True
 sumatoria :: [Int] -> Int -- calcula la suma de todos los elementos de una lista de enteros.
 sumatoria [] = 0
 sumatoria (x:xs) = x + sumatoria xs
+
 {- 
 *Main> sumatoria [5,4,3,2,1]
 15
@@ -75,6 +79,7 @@ sumatoria (x:xs) = x + sumatoria xs
 productoria :: [Int] -> Int -- calcula el producto de todos los elementos de la lista de enteros.
 productoria [] = 1 --Neutro del producto
 productoria (x:xs) = x*productoria xs
+
 {-
 *Main> productoria [5,4,3,2,1]
 120
@@ -83,6 +88,7 @@ productoria (x:xs) = x*productoria xs
 factorial :: Int -> Int -- toma un numero n y calcula n!.
 factorial 0 = 1 --definición factorial (Álgebra)
 factorial n = n*factorial (n-1)
+
 {- 
 *Main> factorial 10
 3628800
@@ -98,6 +104,7 @@ usando division entera.
 
 promedio :: [Int] -> Int
 promedio xs = div(sumatoria xs) (length xs) -- *Tuve problemas de tipos usando el operador '/' y por lo tanto decidí utilizar el div para realizar la división entera
+
 {- 
 *Main> promedio [5,7,8,9,10]
 7
@@ -108,6 +115,7 @@ pertenece :: Int -> [Int] -> Bool
 pertenece c [] = False
 pertenece c (x:xs)      | c == x = True
                         | c /= x = pertenece c xs
+
 {-
 *Main> pertenece 5 [5,6,7,8,9]
 True
@@ -127,6 +135,7 @@ paratodo' :: [a] -> (a -> Bool) -> Bool
 paratodo' [] t = False
 paratodo' (x:xs) t      | t x == True = True
                         | t x /= True = False
+
 {- 
 *Main> paratodo' [5,4,2,1,0] (<0)
 False
@@ -141,6 +150,7 @@ existe' :: [a] -> (a -> Bool) -> Bool
 existe' [] p = False
 existe' (x:xs) p        | p x == True = True 
                         | p x == False = existe' xs p
+
 {- 
 *Main> existe' [5,(-3),7] (<0)
 True
@@ -157,6 +167,7 @@ False
 sumatoria' :: [a] -> (a -> Int) -> Int
 sumatoria' [] p = 0
 sumatoria' (x:xs) p = p x + sumatoria' xs p
+
 {-
 *Main> sumatoria' [4,5,6,7,8,9] (+10)
 99 
@@ -168,6 +179,7 @@ sumatoria' (x:xs) p = p x + sumatoria' xs p
 productoria' :: [a] -> (a -> Int) -> Int
 productoria' [] p = 1
 productoria' (x:xs) p = p x * productoria' xs p
+
 {- 
 *Main> productoria' [5,6,7,8] (+1)
 3024
@@ -179,6 +191,7 @@ recursion ni analisis por casos!).-}
 
 paratodonorec :: [a] -> (a -> Bool) -> Bool
 paratodonorec xs c = paratodo' xs c
+
 {- 
 *Main> paratodonorec [5,6,7,8,9] (<10)
 True
@@ -193,6 +206,7 @@ sin usar recursion ni analisis por casos.
 pares. -}
 todosPares :: [Int] -> Bool
 todosPares xs = paratodo' xs even
+
 {- 
 *Main> paratodonorec [5,6,7,8,9] (<10)
 True
@@ -202,6 +216,7 @@ True
 segundo parametro que sea multiplo del primer parametro. -}
 esMultiplo :: Int -> Int -> Bool
 esMultiplo c x  = mod c x == 0
+
 {- 
 *Main> esMultiplo 5 10
 False
@@ -212,6 +227,7 @@ True
 -}
 hayMultiplo :: Int -> [Int] -> Bool
 hayMultiplo c xs = existe' xs (esMultiplo c)
+
 {- 
 *Main> hayMultiplo 5 [5,10,20]
 True
@@ -226,6 +242,7 @@ los primeros n cuadrados, es decir Ayuda: En Haskell se puede escribir la lista 
 y m como [n..m].-}
 sumaCuadrados :: Int -> Int 
 sumaCuadrados n = sumatoria'[0..n] (^2)
+
 {-
 *Main> sumaCuadrados 100
 338350
@@ -237,6 +254,7 @@ y una lista ls , devuelve True si y solo si, existe algun elemento en ls que div
 -}
 existeDivisor :: Int -> [Int] -> Bool
 existeDivisor n ls = existe' ls (esMultiplo n)
+
 {- 
 *Main> existeDivisor 5 [10]
 False
@@ -274,6 +292,7 @@ devuelvePrimos (x:xs)   | esPrimo x == True = x : devuelvePrimos xs
 
 multiplicaPrimos :: [Int] -> Int
 multiplicaPrimos xs =  productoria (devuelvePrimos xs)
+
 {- 
 *Main> multiplicaPrimos [5]
 5
@@ -285,6 +304,7 @@ multiplicaPrimos xs =  productoria (devuelvePrimos xs)
 fib :: Int -> Int
 fib n   | (n<=1) = n --Razonamos que en los dos primeros casos devuelve su propio n tal que fib 1= 1 y fib 0 = 0 *Tuve problemas llevando a cabo el código por mi mismo, por lo tanto implementé código y traté de entender qué hace
         | otherwise = fib(n-1) + fib(n-2)
+
 esFib :: Int -> Bool
 esFib n = pertenece n (map fib [0..(n+1)])
 
@@ -333,9 +353,11 @@ duplicar cada valor de xs.-}
 duplica :: [Int] -> [Int]
 duplica [] = []
 duplica (x:xs) = ((2*x) : duplica xs)
+
 -- b) Definila utilizando la funcion map.
 duplicamap :: [Int] -> [Int]
 duplicamap xs = map (*2) xs
+
 {-
 *Main> duplica [4,5,6,7]
 [8,10,12,14]
@@ -346,14 +368,17 @@ duplicamap xs = map (*2) xs
 
 {-9. Programa una funcion que dada una lista de numeros xs, calcula una lista que tiene como
 elementos aquellos numeros de xs que son primos.-}
+
 -- a) Definila usando recursion.
 sonPrimos :: [Int] -> [Int]
 sonPrimos [] = []
 sonPrimos (x:xs)|  esPrimo x == True = x : sonPrimos xs
                 |  esPrimo x == False = sonPrimos xs 
+
 -- b) Definila utilizando la funcion filter.
 sonPrimosFiltered :: [Int] -> [Int]
 sonPrimosFiltered xs = filter esPrimo xs
+
 {-
 *Main> sonPrimos [2,3,4,5]
 [2,3,5]
@@ -374,6 +399,7 @@ multiplicaPrimos xs =  productoria (devuelvePrimos xs)
 -- * Creo que se puede mejorar por medio de una función filter 
 multiplicaPrimosFiltered :: [Int] -> Int
 multiplicaPrimosFiltered xs = productoria(filter esPrimo xs) 
+
 {- 
 *Main> multiplicaPrimosFiltered [1,2,3,4,5,6,7,8,9,10]
 210
@@ -390,6 +416,7 @@ primIgualesA :: (Eq a) => a -> [a] -> [a]
 primIgualesA n [] = []
 primIgualesA n (x:xs)   | (n == x) = x: primIgualesA n xs
                         | otherwise = []
+
 {-
 *Main> primIgualesA 5 [0,1,2,3,4,5,5,5,5,5,4,3,2,1,5,67]
 []
@@ -401,6 +428,7 @@ primIgualesA n (x:xs)   | (n == x) = x: primIgualesA n xs
 
 primIgualesAtakewhile :: Eq a => a -> [a] -> [a]
 primIgualesAtakewhile n xs = takeWhile (==n) xs
+
 {- 
 *Main> primIgualesAtakewhile 5 [5,5,5,5,5,4,3,2,1,5,67]
 [5,5,5,5,5]
@@ -418,6 +446,7 @@ primIguales [] = []
 primIguales [x] = [x]
 primIguales  (x:y:xs)   | x==y = x :primIguales (y:xs)
                         | x/=y = [x]
+
 {-
 *Main> primIguales [True,True,True,False,False]
 [True,True,True]
@@ -432,6 +461,7 @@ primIguales  (x:y:xs)   | x==y = x :primIguales (y:xs)
 primIguales' :: Eq a => [a] -> [a]
 primIguales' [] = []
 primIguales' (x:xs) = primIgualesA x (x:xs)
+
 {-
 *Main> primIguales' [True,False,True,True,True]
 [True]
@@ -441,3 +471,29 @@ primIguales' (x:xs) = primIgualesA x (x:xs)
 [True,True,True]
 *Main> 
 -}
+
+{-12 Reescribir todas las funciones del punto 4 utilizando el cuantificador generalizado (sin usar
+inducción y en una lı́nea por función)-}
+
+cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
+cuantGen op z xs t = 
+
+
+
+{-
+paratodo' :: [a] -> (a -> Bool) -> Bool
+paratodo' [] t = False
+paratodo' (x:xs) t      | t x == True = True
+                        | t x /= True = False
+
+existe' :: [a] -> (a -> Bool) -> Bool
+existe' [] p = False
+existe' (x:xs) p        | p x == True = True 
+                        | p x == False = existe' xs p
+
+sumatoria' :: [a] -> (a -> Int) -> Int
+sumatoria' [] p = 0
+sumatoria' (x:xs) p = p x + sumatoria' xs p
+productoria' :: [a] -> (a -> Int) -> Int
+productoria' [] p = 1
+productoria' (x:xs) p = p x * productoria' xs p -}
