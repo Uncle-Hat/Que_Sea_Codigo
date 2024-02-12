@@ -476,24 +476,92 @@ primIguales' (x:xs) = primIgualesA x (x:xs)
 inducción y en una lı́nea por función)-}
 
 cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
-cuantGen op z xs t = 
+cuantGen _ z [] _ = z --Al no haber elementos en la lista retorna al caso base
+cuantGen op z (x:xs) t = op (t x) (cuantGen op z xs t) --Como tenemos elementos en la lista aplicamos el caso recursivo e intentamos revisar, mediante el operador al término afectando a t x
+-- ghci> cuantGen (+) 0 [1,2,3,4,5,6,7,8,9,10] id 
+-- 55
 
+{- 13 (*) Definir una funcion que se denomina distancia de edicion . Que toma como entrada
+dos strings (lista de caracteres). distanciaEdicion::[Char]->[Char]-> Int. La funcion
+distanciaEdicion, se comporta de la siguiente manera: - Si alguna de las listas es vacıa,
+devuelve la longitud de la otra lista. - Si las dos listas son no vacıas: x:xs e y:ys, compara
+los primeros elementos de cada lista: -}
 
+distanciaEdicion :: [Char] -> [Char] -> Int
+distanciaEdicion [] ys = length ys
+distanciaEdicion xs [] = length xs
+distanciaEdicion (x:xs) (y:ys)  | x == y = distanciaEdicion xs ys
+                                | x /= y = 1 + distanciaEdicion xs ys 
 
+-- ghci> distanciaEdicion [] "hola"
+-- 4
+-- ghci> distanciaEdicion [] "Cómo Estás"
+-- 10
+-- ghci> distanciaEdicion [] "Holanda"
+-- 7
+
+{- 14. (*) Definı una funcion primeros que cumplen, primQueCumplen::[a]->(a->Bool)->[a],
+tal que, dada una lista ls y un predicado p, devuelve el tramo inicial de ls que cumple p. -}
+primQueCumplen :: [a] -> (a->Bool) -> [a]
+primQueCumplen [] _ = []
+primQueCumplen (y:ys) p | p y = y : primQueCumplen ys p
+                        | otherwise = primQueCumplen ys p
+-- ghci> primQueCumplen [5,1,3,7,8] esPrimo
+-- [5,1,3,7]
+
+{- 15. (*) Para cada uno de los siguientes patrones, decidı si estan bien tipados, y en tal caso da los
+tipos de cada subexpresion. En caso de estar bien tipado, >el patron cubre todos los casos
+de definicion?
+a) f :: (a, b) -> ...
+ f (x , y) = ...
+b) f :: [(a, b)] -> ...
+ f (a , b) = ...
+c) f :: [(a, b)] -> ...
+ f (x:xs) = ...
+d) f :: [(a, b)] -> ...
+ f ((x, y) : ((a, b) : xs)) = ...
+e) f :: [(Int, a)] -> ...
+ f [(0, a)] = ...
+f) f :: [(Int, a)] -> ...
+ f ((x, 1) : xs) = ...
+g) f :: (Int -> Int) -> Int -> ...
+ f a b = ...
+h) f :: (Int -> Int) -> Int -> ...
+ f a 3 = ...
+i) f :: (Int -> Int) -> Int -> ...
+ f 0 1 2 = ... -}
+
+{- 
+Respuesta 15
+a) Está bien tipado, el tipo de tupla se corresponde a una tupla dentro de un paréntesis, 
+b) Está mal tipado, los tipos de la subexpreción deberían ser [(a,b):ys] (Por ejemplo)
+c) Está mal tipado, [(a,b)] 
+d) Está bien tipado, pero la subexpresión solo responde a casos con dos o más tuplas
+e) Está bien tipado, más sin embargo, únicamente corresponde al caso en que el entero es igual a cero
+f) Está bien tipado, responde a aquellos casos en que a es igual a 1 //Revisar
+g) está bien tipado, el tipo de la sub expresión será un operador de enteros en enteros con un parámentro entero
+h) Está bien tipado, aunque solamente responede a aquellos casos en que el segundo término es 3
+i) Está mal tipado, ya que la función exije dos parámetros, no tres
+-}
+
+{- 
+(*) Para las siguientes declaraciones de funciones, da al menos una definicion cuando sea
+posible. 
+>Podes dar alguna otra definicion alternativa a la que diste en cada caso?
+Por ejemplo, si la declaracion es f :: (a, b) -> a,
+la respuesta es: f (x,y) = x
+a) f :: (a, b) -> b
+b) f :: (a, b) -> c
+c) f :: (a -> b) -> a -> b
+d) f :: (a -> b) -> [a] -> [b] 
+-}
 {-
-paratodo' :: [a] -> (a -> Bool) -> Bool
-paratodo' [] t = False
-paratodo' (x:xs) t      | t x == True = True
-                        | t x /= True = False
-
-existe' :: [a] -> (a -> Bool) -> Bool
-existe' [] p = False
-existe' (x:xs) p        | p x == True = True 
-                        | p x == False = existe' xs p
-
-sumatoria' :: [a] -> (a -> Int) -> Int
-sumatoria' [] p = 0
-sumatoria' (x:xs) p = p x + sumatoria' xs p
-productoria' :: [a] -> (a -> Int) -> Int
-productoria' [] p = 1
-productoria' (x:xs) p = p x * productoria' xs p -}
+a) f (1,d) = d
+a') f (a,e) = e
+b) f (c,e) = 0
+b') f (1,a) = True
+c) f a b = b
+c') f e d = d
+d) f a xs = ys
+d') f a [] = []
+-}

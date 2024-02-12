@@ -1,3 +1,7 @@
+--Desactivo el Hlint
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use camelCase" #-}
+
 {-1. Objetivo-}
 
 {-En este proyecto definiremos nuestros propios tipos de datos. La importancia de poder definir
@@ -219,9 +223,9 @@ de una nota, incrementando en uno su valor si tiene la alteracion Sostenido, dec
 es Natural -}
 
 sonidoCromatico :: NotaMusical -> Int
-sonidoCromatico (Nota nb Sostenido)  = (sonidoNatural nb) + 1
-sonidoCromatico (Nota nb Natural)  = (sonidoNatural nb)
-sonidoCromatico (Nota nb Bemol)  = (sonidoNatural nb) - 1
+sonidoCromatico (Nota nb Sostenido)  = sonidoNatural nb + 1
+sonidoCromatico (Nota nb Natural)  = sonidoNatural nb
+sonidoCromatico (Nota nb Bemol)  = sonidoNatural nb - 1
 
 -- *Main> sonidoCromatico (Nota Re Sostenido)
 -- 3
@@ -396,7 +400,7 @@ Nothing. -}
 la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b
 la_busca Vacia numero = Nothing
 la_busca (Nodo a b lista) numero |a == numero = Just b
-                                |otherwise = la_busca lista numero 
+                                 |otherwise = la_busca lista numero 
 
 -- *Main> la_busca casaDamian 200692
 -- Just "Roberto Musso"
@@ -413,7 +417,145 @@ la_borrar clave (Nodo b c l)    | b == clave = la_borrar clave l
 -- *Main> la_borrar 200692 casaDamian 
 -- Nodo 9876543 "Santiago Tavela" Vacia
 
-{- 
-9. (Punto *)
-10. (Punto *)
--}
+{-9. (Punto *)
+Otro tipo de datos muy util y que se puede usar para representar muchas
+situaciones es el arbol; por ejemplo, el analisis sintactico de una oracion, una estructura
+jerarquica como un arbol genealogico o la taxonomıa de Linneo-}
+
+data Arbol a = Hoja | Rama (Arbol a) a (Arbol a) deriving(Show)
+type Prefijos = Arbol String
+
+{- a) a_long :: Arbol a -> Int que dado un arbol devuelve la cantidad de datos almacenados.-}
+a_long :: Arbol a -> Int
+a_long Hoja = 0
+a_long (Rama iz _ der) = 1 + a_long iz + a_long der
+-- ghci> a_long (Rama (Rama Hoja "abd" Hoja) "abd" Hoja)
+-- 2
+
+{- b) a_hojas :: Arbol a -> Int que dado un arbol devuelve la cantidad de hojas.-}
+a_hojas :: Arbol a -> Int
+a_hojas Hoja = 1
+a_hojas (Rama iz _ der) = a_hojas iz + a_hojas der
+
+{- c) a_inc :: Num a => Arbol a -> Arbol a que dado un arbol que contiene numeros, los incrementa en uno. -}
+a_inc :: Num a => Arbol a -> Arbol a
+a_inc Hoja = Hoja
+a_inc (Rama izq i der) = Rama (a_inc izq) (i+1) (a_inc der)
+-- ghci> a_inc (Rama (Rama Hoja 1 Hoja) 1 Hoja)
+-- Rama (Rama Hoja 2 Hoja) 2 Hoja
+-- ghci> a_inc (Rama (Rama Hoja 5 Hoja) 2 Hoja)
+-- Rama (Rama Hoja 6 Hoja) 3 Hoja 
+
+{- d) a_map :: (a -> b) -> Arbol a -> Arbol b que dada una funcion y un arbol,
+devuelve el arbol con la misma estructura, que resulta de aplicar la funcion a cada uno
+de los elementos del arbol. Revisa la definicion de la funcion anterior y reprogramala
+usando a_map-}
+
+a_map :: (a -> b) -> Arbol a -> Arbol b
+a_map _ Hoja = Hoja
+a_map func (Rama izq i der) = Rama (a_map func izq) (func i) (a_map func der)
+
+a_inc' :: Num a => Arbol a -> Arbol a
+a_inc' Hoja = Hoja
+a_inc' arbol = a_map (+1) arbol 
+
+-- ghci> a_map (+254) (Rama (Rama Hoja 1 Hoja) 2 (Rama Hoja 3 (Rama Hoja 4 Hoja)))
+-- Rama (Rama Hoja 255 Hoja) 256 (Rama Hoja 257 (Rama Hoja 258 Hoja))
+
+-- ghci> a_inc' (Rama (Rama Hoja 1 Hoja) 2 (Rama Hoja 3 (Rama Hoja 4 Hoja)))
+-- Rama (Rama Hoja 2 Hoja) 3 (Rama Hoja 4 (Rama Hoja 5 Hoja))
+
+{-10-(Punto *) Un tipo tambien muy util, es el arbol binario de busqueda (ABB). Un ABB es
+una estructura de datos donde cada nodo tiene un valor y cumple con la propiedad de que
+los valores en el subarbol izquierdo son menores que el valor del nodo, y los valores en el
+subarbol derecho son mayores. Por ejemplo:
+En este ABB, el valor 5 es la raız. Los valores menores que 5 estan en el subarbol izquierdo
+(3, 1, 4), y los valores mayores estan en el subarbol derecho (8, 10). Esta estructura permite
+busquedas eficientes: si deseas encontrar el valor 4, comienzas en la raız y avanzas hacia la
+izquierda y luego hacia la derecha para encontrarlo en el subarbol izquierdo.
+Programar los siguientes apartados:.-}
+
+
+{- a) : Definir el tipo recursivo ABB utilizando los constructores:-}
+
+data ABB a = VacioABB | RamaABB (ABB a) a (ABB a) deriving(Show)
+
+{- b) Definir una funcion insertarABB que tome un valor y un arbol binario como entrada y
+devuelva un nuevo arbol que contenga el valor insertado en el arbol original. La funcion
+tiene que tener el siguiente tipado:
+insertarABB :: Ord a => a -> ABB a -> ABB a -}
+
+insertarABB :: Ord a => a -> ABB a -> ABB a 
+insertarABB a VacioABB = VacioABB
+insertarABB a (RamaABB izq i der) = RamaABB (insertarABB a izq) a (insertarABB a der)
+
+ejemploRamaABB_1 = RamaABB (RamaABB VacioABB 5 VacioABB) 12 VacioABB 
+ejemploRamaABB_Bool = RamaABB (RamaABB VacioABB True VacioABB) False VacioABB 
+
+
+-- ghci> insertarABB 5 VacioABB
+-- VacioABB
+
+-- ghci> insertarABB 2 (RamaABB VacioABB 1 VacioABB)
+-- RamaABB VacioABB 2 VacioABB
+
+-- ghci> insertarABB False ejemploRamaABB_Bool 
+-- RamaABB (RamaABB VacioABB False VacioABB) False VacioABB
+
+{- c) Define una funcion llamada buscarEnArbol que tome un valor y un arbol binario como
+entrada y devuelva True si el valor esta presente en el arbol y False en caso contrario.
+La funcion tiene que tener el siguiente tipado:
+buscarABB :: Eq a => a -> ABB a -> Bool -}
+
+buscarEnArbol :: Eq a => a -> ABB a -> Bool
+buscarEnArbol a VacioABB = False
+buscarEnArbol a (RamaABB izq i der) 
+                                    | i == a = True
+                                    | i /= a = buscarEnArbol a izq || buscarEnArbol a der
+
+-- ghci> buscarEnArbol True ejemploRamaABB_Bool 
+-- True 
+-- ghci> buscarEnArbol False ejemploRamaABB_Bool 
+-- True 
+
+{- d) Notar que los constructores RamaABB y VacioABB permiten construir arboles binarios
+que no cumplen la propiedad fundamental de los arboles binarios de busqueda. Por
+ejemplo: -}
+{- RamaABB ( RamaABB VacioABB 10 VacioABB ) 2 ( RamaABB VacioABB 11 VacioABB )
+El arbol construido se ilustra a continuacion:
+Claramente no es un ABB, otro caso no tan trivial es:
+9Definir la funcion verificarABB que devuelve True si el arbol cumple con la propiedad
+fundamental o False en caso contrario. De manera auxiliar pueden definir las funciones
+:
+mayor_a_todos :: Ord a => a -> ABB a -> Bool
+menor_a_todos :: Ord a => a -> ABB a -> Bool
+Asegurarse que la funcion verificarABB devuelva False para los dos ejemplos mostrados. Para probar la funcion en el primer ejemplo pueden definir:
+ejemplo1 = RamaABB ( RamaABB VacioABB 10 VacioABB )
+2
+( RamaABB VacioABB 11 VacioABB )
+y luego evaluar
+*Main> verificarABB ejemplo1
+Se debe definir analogamente ejemplo2 con la expresion que represente el arbol del
+segundo ejemplo. Ademas deben incluir como comentarios en el codigo el resultado de
+la ejecucion de verificarABB para ejemplo1 y ejemplo2. -}
+
+mayor_a_todos :: Ord a => a -> ABB a -> Bool
+mayor_a_todos a VacioABB = True 
+mayor_a_todos a (RamaABB izq i der) = mayor_a_todos a izq && (a>i) && mayor_a_todos a der
+
+menor_a_todos :: Ord a => a -> ABB a -> Bool
+menor_a_todos a VacioABB = True
+menor_a_todos a (RamaABB izq i der) = menor_a_todos a izq && (a<i) && menor_a_todos a der
+
+verificarABB :: Ord a => ABB a -> Bool
+verificarABB VacioABB = True
+verificarABB (RamaABB izq i der) = mayor_a_todos i izq && menor_a_todos i der && verificarABB izq && verificarABB der
+
+ejemplo1 = RamaABB ( RamaABB VacioABB 10 VacioABB ) 2 ( RamaABB VacioABB 11 VacioABB )
+ejemplo2 = RamaABB ( RamaABB (RamaABB VacioABB 1 VacioABB) 3 (RamaABB VacioABB 7 VacioABB)) 5 ( RamaABB VacioABB 8 (RamaABB VacioABB 10 VacioABB) )
+
+
+-- ghci> verificarABB ejemplo1
+-- False
+-- ghci> verificarABB ejemplo2
+-- False
