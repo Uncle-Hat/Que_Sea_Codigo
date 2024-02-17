@@ -80,7 +80,7 @@ void parimpar(int a[], int par1[], int imp1[], int tam, int *tampares, int *tami
 
 int main()
 {
-    int mpar, mimpar, tam;
+    int mpar, mimpar, tam, marreglo;
 
     printf("Coloque el numero maximo de elementos en dentro del arreglo: ");
     scanf("%d", &tam);
@@ -96,9 +96,9 @@ int main()
 
     mpar = minimo_pares(tampares, par1);
     mimpar = minimo_impares(tamimpares, imp1);
-
     printf("El mínimo de los pares es: %d\n", mpar);
     printf("El mínimo de los impares es: %d\n", mimpar);
+    printf("El elemento mínimo del arreglo ingresado es %d\n",(mpar<mimpar)?mpar:mimpar);
 
     return 0;
 }

@@ -12,19 +12,19 @@ a todos sus elementos iguales. */
 
 int prim_iguales(int tam, int a[])
 {
-    int auxi = 1;
+    int longMayTramo = 1;
     for (int i = 1; i < tam; i++)
     {
         if (a[i - 1] == a[i])
         {
-            auxi++;
+            longMayTramo++;
         }
         else
         {
             break;
         }
     }
-    return auxi;
+    return longMayTramo;
 }
 
 void pedir_arreglo(int tam, int a[])
@@ -44,8 +44,12 @@ int main()
     int a[tam];
     pedir_arreglo(tam, a);
     prim_iguales(tam, a);
-    int auxi = prim_iguales(tam, a);
-    printf("La longitud del tramo inicial más largo cuyos elementos son iguales es:\n");
-    printf("%d\n", auxi);
+    int longMayTramo = prim_iguales(tam, a);
+    printf("La longitud del tramo inicial más largo cuyos elementos son iguales es '%d' \n",longMayTramo);
+    printf("Y el arreglo de los elementos iguales es: ");
+    for (int i = 0; i < longMayTramo; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
     return 0;
 }

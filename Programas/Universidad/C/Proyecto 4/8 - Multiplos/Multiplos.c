@@ -40,7 +40,7 @@ bool todos_pares(int tam, int a[])
 
 bool existe_multiplo(int m, int tam, int a[])
 {
-    printf("De qué número quieres buscar múltiplo?");
+    printf("De qué número quieres buscar múltiplo?\n");
     scanf("%d", &m);
     for (int i = 0; i < tam; i++)
     {
@@ -57,14 +57,13 @@ bool existe_multiplo(int m, int tam, int a[])
 int main()
 {
     int tam, m;
+    m = 0; //Inicializo el valor de m
     printf("Coloque el tamaño máximo del arreglo: \n");
     scanf("%d", &tam);
-    assert(tam>0);
+    assert(tam>0); //La variable tam está forzada a ser mayor a cero
     int a[tam];
-    pedir_arreglo(tam, a);
-    printf("Ahora puedes elegir entre dos programas:\n");
-    printf("(1) Todos Pares\n--Revisa que todos los elementos del arreglo sean pares\n");
-    printf("(2) Existe multiplo\n--Revisa si existe un múltiplo de un numero dentro del arreglo\n");
+    pedir_arreglo(tam, a); //Solicitamos el conjunto de valores
+    printf("Ahora puedes elegir entre dos programas:\n(1) Todos Pares\n--Revisa que todos los elementos del arreglo sean pares\n(2) Existe multiplo\n--Revisa si existe un múltiplo de un numero dentro del arreglo\n");
     int e;
     scanf("%d", &e);
 
@@ -83,7 +82,7 @@ int main()
     {
         existe_multiplo(m, tam, a);
     }
-    else
+    else 
     {
         printf("Coloca una variable válida\n");
     }

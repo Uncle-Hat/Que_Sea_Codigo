@@ -1,2 +1,4 @@
 * Haskell
 *- Instance
+Uso gcc: gcc -Wall -Wextra -std=c99 hola.c -o holaPrograma
+./holaPrograma es como se ejecuta luego
