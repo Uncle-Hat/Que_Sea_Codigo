@@ -47,9 +47,9 @@ int main()
     int longMayTramo = prim_iguales(tam, a);
     printf("La longitud del tramo inicial más largo cuyos elementos son iguales es '%d' \n",longMayTramo);
     printf("Y el arreglo de los elementos iguales es: ");
-    for (int i = 0; i < longMayTramo; i++) {
+    for (int i = 0; i < longMayTramo; i++) 
+    {
         printf("%d ", a[i]);
     }
-    printf("\n");
     return 0;
 }
