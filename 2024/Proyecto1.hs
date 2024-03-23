@@ -2,6 +2,10 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use foldr" #-}
 
+
+{- 
+Explicación, el (h) son anotaciones hechas para acordarme la lógica detrás de algunos programas
+-}
 -- Ejercicio 1
 --a)
 esCero :: Int -> Bool
@@ -241,16 +245,31 @@ sumaCuadrados n = sumatoriaderivando (^2) [0..n]
 -- d)
 
 existeDivisor :: Int -> [Int] -> Bool
-existeDivisor n xs = existe' xs (\x -> mod n x == 0) --mod es la función que da el resto de una división n/m
+existeDivisor n xs = existe' xs (\x -> mod n x == 0) -- (h) mod es la función que da el resto de una división n/m
 -- ghci> existeDivisor 120 [10,20,30]
 -- True
 -- ghci> existeDivisor 120 [0]
 -- *** Exception: divide by zero
 -- ghci> existeDivisor 120 [153]
 -- False
+
 -- e)
-{- esPrimo :: Int -> Bool
-esPrimo n = esMultiplo n 1 && esMultiplo n n && not(esMultiplo n _) -}
+esPrimo :: Int -> Bool
+esPrimo n = not(existeDivisor n [2..n-1]) || n == 2
+{-
+(h) Acá interpreto el rango de búsqueda entre 2 y n-1 ya que se asume que todo número se divide a sí mismo y a uno.
+lectura semántica de la función:
+La función revisa si existe un divisor distinto a 1 y n y, si lo llegara a encontrar; da como resultado que no es primo.
+-}
+-- ghci> esPrimo 4
+-- False
+-- ghci> esPrimo 5
+-- True
+-- ghci> esPrimo 6
+-- False
+-- ghci> esPrimo 7
+-- True
+
 
 -- f)
 
@@ -262,3 +281,71 @@ esPrimo n = esMultiplo n 1 && esMultiplo n n && not(esMultiplo n _) -}
 
 
 -- i)
+
+-- Ejercicio 7
+-- ¿Que hacen estas funciones?
+{-
+
+La función map se define como
+
+map :: (a -> b) -> [a] -> [b]
+
+La función map se define como aquella
+que toma una función que cambia de un
+tipo a otro a cada elemento de la lista;
+dando como resultado una lista del segundo tipo.
+
+
+La función filter se define como
+
+filter :: (a -> Bool) -> [a] -> [a]
+
+El filtro básicamente lleva a cabo un 'Colador'
+dentro de los elementos de la función, básicamente,
+toma una función de tipo booleano y crea una nueva lista
+únicamente devolviendo aquellos elementos de la lista 
+que cumplen la condición.
+
+-}
+
+-- ¿A que equivale la expresion map succ [1, -4, 6, 2, -8], donde succ n = n+1?
+{-
+Tipo succ
+succ :: Enum a => a -> a
+La expresión succ toma un número y devuelve su sucesor,
+con la función map lo que obtendremos es una nueva lista
+con todos los numeros sucesores a cada numero de la lista
+anterior.
+-}
+
+-- ¿Y la expresion filter esPositivo [1, -4, 6, 2, -8]?
+{-
+Esta expresión tomará de la lista aquellos números que cumplan la cualidad de ser positivos
+Tomará la lista [1,-4,6,2,-8] y devolverá [1,6,2]
+-}
+
+-- Ejercicio 8
+
+
+-- Ejercicio 9
+
+
+-- Ejercicio 10
+
+
+-- Ejercicio 11
+
+
+-- Ejercicio 12
+
+
+-- Ejercicio 13
+
+
+-- Ejercicio 14
+
+
+-- Ejercicio 15
+
+
+-- Ejercicio 16
