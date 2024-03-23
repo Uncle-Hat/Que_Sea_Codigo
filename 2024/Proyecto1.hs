@@ -272,15 +272,40 @@ La función revisa si existe un divisor distinto a 1 y n y, si lo llegara a enco
 
 
 -- f)
+factorialredef :: Int -> Int
+factorialredef n = productoria [1..n] 
 
+-- ghci> factorialredef 10
+-- 3628800
+-- ghci> factorialredef 5
+-- 120
+-- ghci> factorialredef 1
+-- 1
+-- ghci> factorialredef 0
+-- 1
 
 -- g)
-
+multiplicaPrimos :: [Int] -> Int
+multiplicaPrimos xs = productoriaderivando id (filter esPrimo xs) 
+-- ghci> multiplicaPrimos [1,2,3,5,6,7,8,9]
+-- 210
+-- ghci> multiplicaPrimos [2,4,5,7,8,9,0]
+-- 0
+-- ghci> multiplicaPrimos [2,4,5,7,8,9,1]
+-- 70
 
 -- h)
+{- fib :: Int -> Int
+fib 0 = 0
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2)
 
+esFib :: Int -> Bool
+esFib n =
+ -}
 
 -- i)
+-- todosFib :: [Int] -> Bool
 
 -- Ejercicio 7
 -- ¿Que hacen estas funciones?
@@ -325,17 +350,86 @@ Tomará la lista [1,-4,6,2,-8] y devolverá [1,6,2]
 -}
 
 -- Ejercicio 8
+-- a)
+duplicaValor :: [Int] -> [Int]
+duplicaValor [] = []
+duplicaValor (x:xs) = x*2 : duplicaValor xs
+-- ghci> duplicaValor [5,2,3,4,5]
+-- [10,4,6,8,10]
+-- ghci> duplicaValor [5,3,2,4,7]
+-- [10,6,4,8,14]
 
+--b)
+duplicaValorMap :: [Int] -> [Int]
+duplicaValorMap = map (*2)
+-- ghci> duplicaValorMap [5,3,2,4,7]
+-- [10,6,4,8,14]
 
 -- Ejercicio 9
 
+-- a)
+sonPrimos :: [Int] -> [Int]
+sonPrimos [] = []
+sonPrimos (x:xs) 
+                | esPrimo x = x :sonPrimos xs 
+                | otherwise = sonPrimos xs
+-- ghci> sonPrimos [1,2,3,4,5,6,7,8,9,10]
+-- [1,2,3,5,7]
+-- ghci> sonPrimos [10,11,12,13,14,15,16]
+-- [11,13]
+
+-- b)
+
+sonPrimosFilter :: [Int] -> [Int]
+sonPrimosFilter = filter esPrimo
+-- ghci> sonPrimosFilter [0..100]
+-- [0,1,2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
+-- c) Sí, por lo mismo ahora le coloqué un filter para que no sea tan engorrosa
+
 
 -- Ejercicio 10
+-- a)
+primIgualesA :: Int -> [Int] -> [Int]
+primIgualesA _ [] = []
+primIgualesA n (x:xs) 
+                        | n == x = x:primIgualesA n xs 
+                        | otherwise = primIgualesA n xs
+-- ghci> primIgualesA 5 [5,4,3,2,1]
+-- [5]
+-- ghci> primIgualesA 5 [5,5,5,2,1]
+-- [5,5,5]
 
+-- b)
+{- Según Hoogle takeWhile, aplica un predicado a una lista, devolviendo el más largo prefijo (Posiblemente vacío) de la lista xs de elementos que satisfagan el pred-}
+primIgualesATW :: (Eq a) => a -> [a] -> [a]
+primIgualesATW n = takeWhile (==n)
+-- ghci> primIgualesATW 5 [5,5,5,5,1,2,3,4,5,5,5,5]
+-- [5,5,5,5]
+-- ghci> primIgualesATW 1 [1,1,1,1,1,2,3,4,5,1,1,1,1]
+-- [1,1,1,1,1]
 
 -- Ejercicio 11
+-- a)
+primIguales :: (Eq a) => [a] -> [a] 
+primIguales [] = []
+primIguales [x] = [x]
+primIguales [x,_] = [x]
+primIguales (x:y:xs) 
+                        | x == y = x : y : primIguales xs
+                        | otherwise = primIguales xs
+-- ghci> primIguales [5,5,1,3,2,6]
+-- [5,5]
+-- ghci> primIguales [4,3,3,4,1]
+-- [4]
 
-
+-- b)
+primIgualesReprogramado :: (Eq a) => [a] -> [a]
+primIgualesReprogramado (x:xs) = x:primIgualesATW x xs
+primIgualesReprogramado [] = []
+-- ghci> primIgualesReprogramado [4,4,5,4,4,4,4]
+-- [4,4]
+-- ghci> primIgualesReprogramado [4,4,4,5]
+-- [4,4,4]
 -- Ejercicio 12
 
 
