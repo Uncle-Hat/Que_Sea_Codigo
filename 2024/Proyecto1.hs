@@ -296,18 +296,33 @@ multiplicaPrimos xs = productoriaderivando id (filter esPrimo xs)
 -- ghci> multiplicaPrimos [2,4,5,7,8,9,1]
 -- 70
 
--- h)
-{- fib :: Int -> Int
+-- h
+fib :: Int -> Int
 fib 0 = 0
 fib 1 = 1
 fib n = fib (n-1) + fib (n-2)
 
+listaFib :: Int -> [Int]
+listaFib 0 = [0]
+listaFib 1 = [1, 0]
+listaFib 2 = [1, 1, 0]
+listaFib n = fib n : listaFib (n-1)
+
 esFib :: Int -> Bool
-esFib n =
- -}
+esFib n = existe' (listaFib 20) (==n)
+
+-- ghci> esFib 55
+-- True
+-- ghci> esFib 34
+-- True
+-- ghci> esFib 13
+-- True
 
 -- i)
--- todosFib :: [Int] -> Bool
+todosFib :: [Int] -> Bool
+todosFib xs = paratodo' xs esFib
+-- ghci> todosFib [55,34,21,13,8,5,3,2,1,1,0]
+-- True
 
 -- Ejercicio 7
 -- ¿Que hacen estas funciones?
