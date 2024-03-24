@@ -194,12 +194,14 @@ productoriaderivando f (x:xs) = f x * productoriaderivando f xs
 -- 96
 -- ghci> productoriaderivando  valorAbsoluto [1,2,0]
 -- 0
+
 productoria' :: [a] -> (a->Int) -> Int
 productoria' [] _ = 1
 productoria' (x:xs) f = f x * productoria' xs f
 -- ghci> productoria' [-1,2,3] valorAbsoluto 
 -- 6
-
+-- ghci> productoria' [5,3,1,2,4] (+2)
+-- 2520
 
 -- Ejercicio 5
 paratodoRedef :: (a -> Bool) -> [a] -> Bool
