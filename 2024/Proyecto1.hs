@@ -256,11 +256,13 @@ existeDivisor n xs = existe' xs (\x -> mod n x == 0) -- (h) mod es la función q
 -- e)
 esPrimo :: Int -> Bool
 esPrimo n = not(existeDivisor n [2..n-1]) || n == 2
+
 {-
 (h) Acá interpreto el rango de búsqueda entre 2 y n-1 ya que se asume que todo número se divide a sí mismo y a uno.
 lectura semántica de la función:
 La función revisa si existe un divisor distinto a 1 y n y, si lo llegara a encontrar; da como resultado que no es primo.
 -}
+
 -- ghci> esPrimo 4
 -- False
 -- ghci> esPrimo 5
@@ -430,16 +432,17 @@ primIgualesReprogramado [] = []
 -- [4,4]
 -- ghci> primIgualesReprogramado [4,4,4,5]
 -- [4,4,4]
--- Ejercicio 12
+
+-- Ejercicio 12 (*)
 
 
--- Ejercicio 13
+-- Ejercicio 13 (*)
 
 
--- Ejercicio 14
+-- Ejercicio 14 (*)
 
 
--- Ejercicio 15
+-- Ejercicio 15 (*)
 
 
--- Ejercicio 16
+-- Ejercicio 16 (*)
