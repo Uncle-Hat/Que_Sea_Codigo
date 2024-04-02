@@ -26,3 +26,6 @@ numerodeletra 'w' = 24
 numerodeletra 'x' = 25
 numerodeletra 'y' = 26
 numerodeletra 'z' = 27
+
+entreUnoyOtro :: Int -> Int -> Int
+entreUnoyOtro a n = a-n
