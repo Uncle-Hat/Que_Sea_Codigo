@@ -125,3 +125,54 @@ esfutz _ _ = False
 -- ghci> contar_Futbolistas eDVVVFAC Mediocampo
 -- 0
 -- **Para poder comparar el auxiliar coloqué un deriving a Zona tipo Eq 
+
+-- Ejercicio 5
+-- a)
+sonidoNatural :: NotaBasica -> Int
+sonidoNatural Do = 0
+sonidoNatural Re = 2
+sonidoNatural Mi = 4
+sonidoNatural Fa = 5
+sonidoNatural Sol = 7
+sonidoNatural La = 9
+sonidoNatural Si = 11
+
+-- b)
+data Alteracion = Bemol|Natural|Sostenido
+
+-- c)
+data NotaMusical = Nota NotaBasica Alteracion
+
+-- d)
+sonidoCromatico :: NotaMusical -> Int
+sonidoCromatico (Nota nb Sostenido) = sonidoNatural nb +1
+sonidoCromatico (Nota nb Natural) = sonidoNatural nb
+sonidoCromatico (Nota nb Bemol) = sonidoNatural nb -1
+
+-- ghci> sonidoCromatico (Nota Do Sostenido) 
+-- 1
+-- ghci> sonidoCromatico (Nota Re Sostenido) 
+-- 3
+
+-- e)
+instance Eq NotaMusical
+      where 
+      a==b = sonidoCromatico a == sonidoCromatico b
+
+-- ghci>  sonidoCromatico (Nota Do Sostenido) == sonidoCromatico (Nota Do Sostenido)
+-- True
+-- ghci>  sonidoCromatico (Nota Do Sostenido) == sonidoCromatico (Nota Re Bemol)
+-- True
+
+-- f)
+instance Ord NotaMusical
+      where
+            a<=b = sonidoCromatico a <= sonidoCromatico b
+
+-- ghci> sonidoCromatico (Nota Re Sostenido) <= sonidoCromatico (Nota Do Sostenido)
+-- False
+-- ghci>  sonidoCromatico (Nota Do Sostenido) > sonidoCromatico (Nota Re Sostenido)
+-- False
+-- ghci>  sonidoCromatico (Nota Do Sostenido) < sonidoCromatico (Nota Re Sostenido)
+-- True
+
