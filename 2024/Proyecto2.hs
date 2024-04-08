@@ -1,4 +1,4 @@
--- E|ercicio 1
+-- Ejercicio 1 - Tipos enumerados
 -- a)
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
@@ -25,14 +25,14 @@ cifradoAmericano Sol = 'G'
 cifradoAmericano La = 'A'
 cifradoAmericano Si = 'B'
 
--- E|ercicio 2
+-- Ejercicio 2 - Clases de tipos
 -- *Se ha modificado el tipo NotaBasica para derivarlo con el fin de llevar a cabo la función
 -- ghci> Do <= Re
 -- True
 -- ghci> min Fa Sol
 -- Fa
 
--- E|ercicio 3
+-- E|ercicio 3 - Polimorfismo ad hoc 
 -- a)
 minimoElemento :: Ord a => [a] -> a 
 minimoElemento [x] = x
@@ -59,7 +59,7 @@ minimoElemento' xs = minimum xs
 -- ghci> minimoElemento [Fa,La,Sol,Re,Fa]
 -- Re
 
--- E|ercicio 4
+-- Ejercicio 4 - Sinonimo de tipos; constructores con parametros
 -- a)
 -- Sinonimos de tipo
 type Altura = Int
@@ -107,7 +107,7 @@ contar_Velocistas (_:xs) = 0 + contar_Velocistas xs
 
 
 -- d,e)
-{- d) Program´a la funci´on contar_futbolistas :: [Deportista] -> Zona -> Int que
+{- d) Programa la funcion contar_futbolistas :: [Deportista] -> Zona -> Int que
 dada una lista de deportistas xs, y una zona z, devuelve la cantidad de futbolistas
 incluidos en xs que juegan en la zona z. Programa contar_futbolistas sin usar
 igualdad, utilizando pattern matching. -}
@@ -126,7 +126,7 @@ esfutz _ _ = False
 -- 0
 -- **Para poder comparar el auxiliar coloqué un deriving a Zona tipo Eq 
 
--- Ejercicio 5
+-- Ejercicio 5 - Definicion de clases
 -- a)
 sonidoNatural :: NotaBasica -> Int
 sonidoNatural Do = 0
@@ -175,4 +175,85 @@ instance Ord NotaMusical
 -- False
 -- ghci>  sonidoCromatico (Nota Do Sostenido) < sonidoCromatico (Nota Re Sostenido)
 -- True
+
+-- Ejercicio 6 - Tipos enumerados con polimorfismo
+
+-- a)
+primerElemento :: [a] -> Maybe a
+primerElemento [] = Nothing
+primerElemento xs = Just (head xs)
+
+-- ghci> primerElemento [1,2,3,4]
+-- Just 1
+-- ghci> primerElemento []
+-- Nothing
+
+-- Ejercicio 7 - Tipos Recursivos
+-- a) Programa las siguientes funciones:
+data Cola = VaciaC | Encolada Deportista Cola 
+-- 1) 
+atender :: Cola -> Maybe Cola
+atender VaciaC = Nothing
+atender (Encolada _ c) = Just c
+
+-- 2) 
+encolar :: Deportista -> Cola -> Cola
+encolar dep VaciaC = Encolada dep VaciaC
+encolar dep (Encolada d c) = Encolada d (Encolada dep c)
+
+-- 3) 
+busca :: Show Deportista => Cola -> Zona -> Maybe Deportista
+busca VaciaC _ = Nothing
+busca (Encolada (Futbolista _ nc ph a) _) z = Just (Futbolista z nc ph a)
+busca _ _ = Nothing
+-- b) A que otro tipo se parece Cola?.
+-- Al tipo de listas convencional ':'
+
+-- Ejercicio 8
+
+-- a)
+--Se podría definir como un nodo con nombre y número
+data ListaAsoc a b = Vacia | Nodo String Int ( ListaAsoc a b ) deriving (Show)
+
+-- b)
+
+-- 1
+la_long :: ListaAsoc a b -> Int 
+la_long Vacia = 0
+la_long (Nodo _ _ la) = 1 + la_long la
+
+ejemplo3Nodos :: ListaAsoc a b
+ejemplo3Nodos = Nodo "Jeremias" 3513475621 (Nodo "Julio" 4808140 (Nodo "Julian" 987654312 Vacia))
+ejemplo4Nodos :: ListaAsoc a b
+ejemplo4Nodos = Nodo "Chino" 1212121 (Nodo "Viky" 14141414 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia )))
+
+-- ghci> la_long ejemplo3Nodos
+-- 3
+-- ghci> la_long ejemplo4Nodos
+-- 4
+
+-- 2
+la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b
+la_concat la Vacia = la
+la_concat Vacia la = la
+la_concat (Nodo nom num la) lista = Nodo nom num (la_concat lista la)
+-- ghci> la_concat ejemplo3Nodos ejemplo4Nodos 
+-- Nodo "Jeremias" 3513475621 (Nodo "Chino" 1212121 (Nodo "Julio" 4808140 (Nodo "Viky" 14141414 (Nodo "Julian" 987654312 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))))))
+
+-- ghci> la_concat ejemplo4Nodos ejemplo3Nodos 
+-- Nodo "Chino" 1212121 (Nodo "Jeremias" 3513475621 (Nodo "Viky" 14141414 (Nodo "Julio" 4808140 (Nodo "Rotio" 55555555 (Nodo "Julian" 987654312 (Nodo "Nico" 4 Vacia))))))
+
+-- ghci> la_concat ejemplo3Nodos ejemplo4Nodos 
+-- Nodo "Jeremias" 3513475621 (Nodo "Chino" 1212121 (Nodo "Julio" 4808140 (Nodo "Viky" 14141414 (Nodo "Julian" 987654312 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))))))
+
+-- 3
+
+
+-- 4
+
+
+-- 5
+
+
+-- 6
 
