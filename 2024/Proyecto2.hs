@@ -1,4 +1,7 @@
 -- Ejercicio 1 - Tipos enumerados
+{- Cuando los distintos valores que debemos distinguir en un tipo son
+finitos, podemos enumerar cada uno de los valores del tipo. -}
+
 -- a)
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 import Control.Monad (when)
@@ -13,7 +16,7 @@ titulo Computacion = "Licenciatura en Computacion"
 titulo Astronomia = "Licenciatura en Astronomia"
 
 -- c)
-data NotaBasica = Do | Re | Mi | Fa | Sol | La | Si  deriving (Eq,Ord,Show) 
+data NotaBasica = Do | Re | Mi | Fa | Sol | La | Si  deriving (Eq,Ord,Show)
 
 
 --d)
@@ -27,6 +30,14 @@ cifradoAmericano La = 'A'
 cifradoAmericano Si = 'B'
 
 -- Ejercicio 2 - Clases de tipos
+{-
+El problema es que todavı́a no hemos equipado al tipo nuevo Carrera con una noción de
+igualdad entre sus valores. ¿Cómo logramos eso en Haskell? Debemos garantizar que el tipo
+Carrera sea un miembro de la clase Eq. Conceptualmente, una clase es un conjunto de
+tipos que proveen ciertas operaciones especiales:
+Podemos indicar al intérprete que infiera automáticamente la definición de una clase
+para un tipo dado en el momento de su definición, usando deriving como se muestra a continuación:
+-}
 -- *Se ha modificado el tipo NotaBasica para derivarlo con el fin de llevar a cabo la función
 -- ghci> Do <= Re
 -- True
