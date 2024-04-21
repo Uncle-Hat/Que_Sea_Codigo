@@ -1,6 +1,7 @@
 -- Ejercicio 1 - Tipos enumerados
 -- a)
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+import Control.Monad (when)
 {-# HLINT ignore "Use camelCase" #-}
 data Carrera = Matematica | Fisica | Computacion | Astronomia
 
@@ -127,6 +128,11 @@ esfutz _ _ = False
 -- **Para poder comparar el auxiliar coloqué un deriving a Zona tipo Eq 
 
 -- Ejercicio 5 - Definicion de clases
+{- 
+Cuando hablamos de definición de clases, ¿De qué hablamos?
+-}
+
+
 -- a)
 sonidoNatural :: NotaBasica -> Int
 sonidoNatural Do = 0
@@ -168,6 +174,7 @@ instance Eq NotaMusical
 instance Ord NotaMusical
       where
             a<=b = sonidoCromatico a <= sonidoCromatico b
+            -- Instancia en el Orden de las NotaMusical donde cuando a es menor que b, el sonido cromático de a es menor igual que el sonido cromátrico b
 
 -- ghci> sonidoCromatico (Nota Re Sostenido) <= sonidoCromatico (Nota Do Sostenido)
 -- False
@@ -213,7 +220,9 @@ busca _ _ = Nothing
 
 -- a)
 --Se podría definir como un nodo con nombre y número
-data ListaAsoc a b = Vacia | Nodo String Int ( ListaAsoc a b ) deriving (Show)
+
+
+data ListaAsoc a b = Vacia | Nodo a b ( ListaAsoc a b ) deriving (Show, Eq)
 
 -- b)
 
@@ -222,11 +231,10 @@ la_long :: ListaAsoc a b -> Int
 la_long Vacia = 0
 la_long (Nodo _ _ la) = 1 + la_long la
 
-ejemplo3Nodos :: ListaAsoc a b
+ejemplo3Nodos :: ListaAsoc String Integer
 ejemplo3Nodos = Nodo "Jeremias" 3513475621 (Nodo "Julio" 4808140 (Nodo "Julian" 987654312 Vacia))
-ejemplo4Nodos :: ListaAsoc a b
+ejemplo4Nodos :: ListaAsoc String Integer
 ejemplo4Nodos = Nodo "Chino" 1212121 (Nodo "Viky" 14141414 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia )))
-
 -- ghci> la_long ejemplo3Nodos
 -- 3
 -- ghci> la_long ejemplo4Nodos
@@ -236,7 +244,7 @@ ejemplo4Nodos = Nodo "Chino" 1212121 (Nodo "Viky" 14141414 (Nodo "Rotio" 5555555
 la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b
 la_concat la Vacia = la
 la_concat Vacia la = la
-la_concat (Nodo nom num la) lista = Nodo nom num (la_concat lista la)
+la_concat (Nodo clave dato la) lista = Nodo clave dato (la_concat lista la)
 -- ghci> la_concat ejemplo3Nodos ejemplo4Nodos 
 -- Nodo "Jeremias" 3513475621 (Nodo "Chino" 1212121 (Nodo "Julio" 4808140 (Nodo "Viky" 14141414 (Nodo "Julian" 987654312 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))))))
 
@@ -247,13 +255,53 @@ la_concat (Nodo nom num la) lista = Nodo nom num (la_concat lista la)
 -- Nodo "Jeremias" 3513475621 (Nodo "Chino" 1212121 (Nodo "Julio" 4808140 (Nodo "Viky" 14141414 (Nodo "Julian" 987654312 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))))))
 
 -- 3
+-- Requerimos que la función agregue un nodo a la lista de asociaciones si la clave no estaba en la lista, pero si la lista ya tenia la clave, la actualiza
 
+la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b
+la_agregar Vacia c d = Nodo c d Vacia
+la_agregar (Nodo clave dato la) c d
+                                    |c == clave = Nodo c dato (la_agregar la clave dato)
+                                    |otherwise = Nodo c d (la_agregar la clave dato)
+-- ghci> la_agregar ejemplo4Nodos "Jonas" 12897310298
+-- Nodo "Jonas" 12897310298 (Nodo "Chino" 1212121 (Nodo "Viky" 14141414 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))))
+-- ghci> la_agregar ejemplo4Nodos "Candace" 33333142
+-- Nodo "Candace" 33333142 (Nodo "Chino" 1212121 (Nodo "Viky" 14141414 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))))
+-- ghci> la_agregar Vacia "Candace" 33333142
+-- Nodo "Candace" 33333142 Vacia
 
 -- 4
+la_pares :: ListaAsoc a b -> [(a, b)] --Que transforma una lista de asociaciones en una lista de pares clave-dato.
+la_pares Vacia = []
+la_pares (Nodo clave dato la) = (clave,dato) : la_pares la 
+-- ghci> la_pares ejemplo4Nodos 
+-- [("Chino",1212121),("Viky",14141414),("Rotio",55555555),("Nico",4)]
+-- ghci> la_pares ejemplo3Nodos 
+-- [("Jeremias",3513475621),("Julio",4808140),("Julian",987654312)]
+--5 dada una lista y una clave devuelve el dato asociado, si es que existe. En caso contrario devuelve Nothing.
+la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b 
+la_busca Vacia _ = Nothing
+la_busca (Nodo clave dato la) c 
+                              | clave == c = Just dato
+                              | otherwise = la_busca la c
+-- ghci> la_busca ejemplo4Nodos "Chino"
+-- Just 1212121
+-- ghci> la_busca ejemplo4Nodos "Rotsio"
+-- Nothing
+-- ghci> la_busca ejemplo4Nodos ""
+-- Nothing
+-- ghci> la_busca ejemplo4Nodos "Viky"
+-- Just 14141414
 
-
--- 5
-
-
--- 6
+-- 6) dada una clave a elimina la entrada en la lista
+la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b
+la_borrar _ Vacia = Vacia
+la_borrar c (Nodo clave dato la) 
+                               | c == clave = la_borrar c la
+                               | otherwise = Nodo clave dato (la_borrar c la)
+-- ghci> la_borrar "Chino" ejemplo4Nodos
+-- Nodo "Viky" 14141414 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))
+-- ghci> la_borrar "Viky" ejemplo4Nodos
+-- Nodo "Chino" 1212121 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia))
+-- ghci> la_borrar "" ejemplo4Nodos
+-- Nodo "Chino" 1212121 (Nodo "Viky" 14141414 (Nodo "Rotio" 55555555 (Nodo "Nico" 4 Vacia)))
 

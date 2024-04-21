@@ -376,7 +376,7 @@ la_concat (Nodo a b (lista)) list = (Nodo a b (la_concat list lista))
 agrega un nodo a la lista de asociaciones si la clave no esta en la lista, o actualiza
 el valor si la clave ya se encontraba. -}
 la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b
-la_agregar Vacia a1 b1 = (Nodo a1 b1 Vacia)
+la_agregar Vacia a1 b1 = Nodo a1 b1 Vacia
 la_agregar (Nodo a b l) a1 b1 =
     case a of 
         a | a == a1 -> (Nodo a b1 l)
