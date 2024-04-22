@@ -1,0 +1,25 @@
+Haskell reduce y, tras llegar al valor, suelta el valor
+
+El lenguaje C sin embargo tiene Expresiones y sentencias, 
+Un estado es un conjunto de variables que almacenan un valor ehn un determinado moemnto
+Expresiones
+
+Sentencias
+
+Expresiones
+UNA EXPRESION NO CAMBIA EL ESTADO
+
+Estado de x en el proceso
+
+Condicion determinista, cuando ocurre, termina
+
+Transformación, modifica el estado en x 
+
+stdio - Estandar input output 
+En inglés void es vacío
+
+devuevle namefunc(toma){
+  Sentencia
+}
+gcc -Wall -Wextra -std=c99 nombrecompilar.c -o programaquevaasalir
+./programaquevaasalir
