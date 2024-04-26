@@ -32,22 +32,62 @@ ghci> masSatelites ejemplo1 120
 -}
 
 -- c
-instance Ord Temperatura 
-    where
-        compare O B = LT
-        compare B A = LT
-        compare A F = LT 
-        compare F G = LT
-        compare G K = LT
-        compare K M = LT
-        compare _ _ = EQ
+instance Ord Temperatura  where
+                compare O B = LT
+                compare B A = LT
+                compare A F = LT 
+                compare F G = LT
+                compare G K = LT
+                compare K M = LT
+                compare _ _ = EQ
 
-instance Ord Luminosidad
-    where
+instance Ord Luminosidad where
         compare SuperGigante Gigante = GT
         compare Gigante  SecuenciaPrincipal = GT
         compare SecuenciaPrincipal Enana = GT
+        compare x y = EQ
 
-instance Ord Astro
-    where
-        Estrella a b c < Estrella d e f = a < d && b < e 
+instance Eq Astro where
+        Estrella a b c == Estrella d e f = a == d && b == e  
+--Hacer Ejercicios similares
+
+-- Ejercicio 3
+--a
+data Nivel = Uno | Dos | Tres deriving (Eq,Show)
+data NotasDeIngles = EvolucionDelEstudiante String Nivel Int Int Int NotasDeIngles
+                        | NoHayMásEstudiantes deriving Show
+
+--Ejemplos Estudiantes
+ejemploest1 :: NotasDeIngles
+ejemploest1 = EvolucionDelEstudiante "Ricardo" Tres 4 5 10 NoHayMásEstudiantes
+ejemploest2 :: NotasDeIngles
+ejemploest2 = EvolucionDelEstudiante "Gerardo" Dos 8 8 10 NoHayMásEstudiantes
+ejemplogrupest1 :: NotasDeIngles
+ejemplogrupest1 = EvolucionDelEstudiante "Ricardo" Tres 4 5 10 (EvolucionDelEstudiante "Gerardo" Dos 8 8 10 (EvolucionDelEstudiante "Armando" Tres 8 8 5 NoHayMásEstudiantes))
+
+--b
+pasaDeNivel :: NotasDeIngles -> String -> Bool
+pasaDeNivel NoHayMásEstudiantes _ = False
+pasaDeNivel (EvolucionDelEstudiante nme lvl nta1 nta2 fnl nI) nmebuscado
+                                                                        | nme==nmebuscado &&( lvl == Uno||lvl==Dos) = (nta1 == 8||nta2 == 8) && fnl >=7 
+                                                                        | nme == nmebuscado && lvl == Tres = (nta1 == 6||nta2 == 6) && fnl >= 7 
+                                                                        | otherwise = False
+
+-- ghci> pasaDeNivel ejemploest1 "Juan"
+-- False
+-- ghci> pasaDeNivel ejemploest1 "Ricardo"
+-- False
+-- ghci> pasaDeNivel ejemploest2 "Gerardo"
+-- True
+
+-- c
+devolverNotaFinal :: NotasDeIngles -> String -> Maybe Int
+devolverNotaFinal NoHayMásEstudiantes _ = Nothing
+devolverNotaFinal (EvolucionDelEstudiante nme _ _ _ fnl nI) nmebuscado 
+                                                                                |nmebuscado == nme = Just fnl
+                                                                                |otherwise = devolverNotaFinal nI nmebuscado
+
+-- ghci> devolverNotaFinal ejemplogrupest1 "Armando"
+-- Just 5
+-- ghci> devolverNotaFinal ejemplogrupest1 "Gerardo"
+-- Just 10
