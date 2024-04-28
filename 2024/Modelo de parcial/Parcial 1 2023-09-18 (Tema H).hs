@@ -32,30 +32,29 @@ ghci> masSatelites ejemplo1 120
 -}
 
 -- c
-instance Ord Temperatura  where
-                compare O B = LT
-                compare B A = LT
-                compare A F = LT 
-                compare F G = LT
-                compare G K = LT
-                compare K M = LT
-                compare _ _ = EQ
+auxDTemp :: Astro -> Maybe Temperatura
+auxDTemp (Planeta {}) = Nothing
+auxDTemp (Estrella _ temp _ )= Just temp
 
-instance Ord Luminosidad where
-        compare SuperGigante Gigante = GT
-        compare Gigante  SecuenciaPrincipal = GT
-        compare SecuenciaPrincipal Enana = GT
-        compare x y = EQ
 
-instance Eq Astro where
-        Estrella a b c == Estrella d e f = a == d && b == e  
---Hacer Ejercicios similares
+auxDLumin :: Astro -> Maybe Luminosidad
+auxDLumin (Planeta {}) = Nothing
+auxDLumin (Estrella lum _ _) = Just lum
+
+auxDNombre :: Astro -> Maybe Nombre
+auxDNombre (Planeta {}) = Nothing
+auxDNombre (Estrella _ _ nom) = Just nom
+
+instance Astro Ord where
+        
+
+-- Hacer Ejercicios similares
 
 -- Ejercicio 3
 --a
 data Nivel = Uno | Dos | Tres deriving (Eq,Show)
 data NotasDeIngles = EvolucionDelEstudiante String Nivel Int Int Int NotasDeIngles
-                        | NoHayMásEstudiantes deriving Show
+                    | NoHayMásEstudiantes deriving Show
 
 --Ejemplos Estudiantes
 ejemploest1 :: NotasDeIngles
@@ -68,7 +67,7 @@ ejemplogrupest1 = EvolucionDelEstudiante "Ricardo" Tres 4 5 10 (EvolucionDelEstu
 --b
 pasaDeNivel :: NotasDeIngles -> String -> Bool
 pasaDeNivel NoHayMásEstudiantes _ = False
-pasaDeNivel (EvolucionDelEstudiante nme lvl nta1 nta2 fnl nI) nmebuscado
+pasaDeNivel (EvolucionDelEstudiante nme lvl nta1 nta2 fnl _) nmebuscado
                                                                         | nme==nmebuscado &&( lvl == Uno||lvl==Dos) = (nta1 == 8||nta2 == 8) && fnl >=7 
                                                                         | nme == nmebuscado && lvl == Tres = (nta1 == 6||nta2 == 6) && fnl >= 7 
                                                                         | otherwise = False
