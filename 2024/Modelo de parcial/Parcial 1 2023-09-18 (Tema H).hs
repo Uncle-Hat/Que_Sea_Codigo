@@ -43,10 +43,7 @@ auxDLumin (Estrella lum _ _) = Just lum
 
 auxDNombre :: Astro -> Maybe Nombre
 auxDNombre (Planeta {}) = Nothing
-auxDNombre (Estrella _ _ nom) = Just nom
-
-instance Astro Ord where
-        
+auxDNombre (Estrella _ _ nom) = Just nom        
 
 -- Hacer Ejercicios similares
 
