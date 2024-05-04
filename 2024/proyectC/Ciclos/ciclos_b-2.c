@@ -1,20 +1,22 @@
 #include <stdio.h>
-int main()
+int main(void)
 {
-    int x,y;
-    bool res;
+    int x,i,res;
     printf("x -> ");
-    scanf("%d\n",&x);
+    scanf("%d",&x);
     printf("y -> ");
-    scanf("%d\n",&y);
-    printf("c0 : ( x -> %d, y -> %ds, res -> %d )",x,y,res);
-    i=0;
-    res = True;
+    scanf("%d",&i);
+    printf("res -> ");
+    scanf("%d",&res);
+    printf("c0 : ( x -> %d, i -> %d, res -> %d )",x,i,res);
+    i=2;
+    res = 1;
     while ((i<x)&&res)
     {
         res = res && ((x % i)!=0);
         i = i+1;
-        printf("c1 : ( x -> %d , y -> %d , z -> %d )",x,y,z);
+        printf("\nc1 : ( x -> %d , i -> %d , res -> %d )",x,i,res);
         }
     return 0;
 }
+//Preguntar por qué si colocás un '\n' en un "%d" funciona mak
