@@ -19,4 +19,14 @@ int main(void)
         }
     return 0;
 }
-//Preguntar por qué si colocás un '\n' en un "%d" funciona mak
+// x -> 5
+// y -> 0
+// res -> 0
+// c0 : ( x -> 5, i -> 0, res -> 0 )
+// c1 : ( x -> 5 , i -> 3 , res -> 1 )
+// c1 : ( x -> 5 , i -> 4 , res -> 1 )
+// c1 : ( x -> 5 , i -> 5 , res -> 1 )
+
+//Este programa aumenta el valor de i y cambia el valor de verdad de res
+
+//Preguntar por qué si colocás un '\n' en un "%d" funciona mal

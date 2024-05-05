@@ -10,7 +10,8 @@
     "terminal.integrated.smoothScrolling": true,
     "files.associations": {
         "stdio.h": "c",
-        "assert.h": "c"
+        "assert.h": "c",
+        "random": "c"
     },
     "workbench.colorCustomizations": {
         "minimap.background": "#00000000",
