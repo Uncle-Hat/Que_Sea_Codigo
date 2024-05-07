@@ -1,29 +1,32 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdbool.h>
 bool pedir_booleano (char a){
     int x;
-    printf("Ingresa el valor de verdad de la variable %c 0 False, 1 True",a);
+    printf("Ingresa el valor de verdad de la variable %c (0 False, 1 True)\n",a);
     scanf("%d",&x);
-    return (x==1);
+    x = x == 1;
+    return x;
 }
 
 void imprimir_booleano (bool x){
+    char valor;
     if (x)
     {
-        x = 'V';
+        valor = 'V';
     }
     else
     {
-        x = 'F';
+        valor = 'F';
     }
-    
-    printf("El valor de verdad de la variable es: %c ",x);
+    printf("El valor de verdad de la variable es... %c\n",valor);
 }
 int main()
 {
     bool c;
     char name;
-    printf("Ingresa un caracter");
+    printf("Ingresa un caracter:\n");
     scanf("%c",&name);
     c = pedir_booleano(name);
     imprimir_booleano(c);
