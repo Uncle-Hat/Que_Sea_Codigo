@@ -17,5 +17,8 @@
     "workbench.colorCustomizations": {
         "minimap.background": "#00000000",
         "scrollbar.shadow": "#00000000"
-    }
+    },
+    "workbench.productIconTheme": "icons-carbon",
+    "workbench.preferredDarkColorTheme": "Become Orange Color Theme",
+    "workbench.colorTheme": "Blueberry Banana"
 }
