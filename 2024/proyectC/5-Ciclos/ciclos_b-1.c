@@ -1,4 +1,10 @@
 #include <stdio.h>
+
+/*
+En esta función le doy un estado inicial a x, y, e i; luego le asigno a i cero y, si equis es mayor a y 
+a equis se le asigna equis menos y, y a i se le suma 1, esto se repite hasta que equis sea menor a y.
+*/
+
 int main(void)
 {
     int x,y,i;

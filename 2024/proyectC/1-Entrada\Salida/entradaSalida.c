@@ -1,4 +1,7 @@
 #include <stdio.h>
+
+// Programa que asigna valores y los opera en el print
+
 int main(void)
 {
     int x,y,z;

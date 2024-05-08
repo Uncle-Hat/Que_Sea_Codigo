@@ -1,4 +1,7 @@
 #include <stdio.h>
+
+//Coloco un valor a i, y si i es diferente de 0, i se le resta 1 y así hasta que no entre al bucle
+
 int main()
 {
     int i;

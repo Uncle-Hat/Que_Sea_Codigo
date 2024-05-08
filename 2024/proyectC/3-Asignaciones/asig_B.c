@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//En esta funcion se asignan valores a variables, operamos con ellas y mostramos los valores en cada estado
+
 int main(void)
 {
     int x,y;

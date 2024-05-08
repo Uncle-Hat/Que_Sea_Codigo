@@ -1,3 +1,6 @@
+
+//Esta funcion va mostrando los estados de cada variable y también las opera y muestra los resultados
+
 int main(void)
 {
     int x, y, z, b, w;

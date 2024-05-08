@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//Damos valores a las variables x e y, operamos con ellas y mostramos los valores en cada estado.
+
 int main(void)
 {
     int x,y;

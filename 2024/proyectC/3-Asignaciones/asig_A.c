@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//Declaramos una variable x y le asignamos un valor, mostrando los valores de x en diversos estados
+
 int main(void)
 {
     int x;

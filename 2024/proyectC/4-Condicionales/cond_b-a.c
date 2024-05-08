@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+/*
+Esta funcion solicita los valores de x, y, z y m, y los compara para asignar el valor mas pequeño a m.
+pero si no es el caso, m se queda con el valor de m. 
+Y luego compara m con z, si m es menor que z, no hace nada, pero si no es el caso, m se queda con el valor de z
+*/
+
 int main()
 {
     int x,y,z,m;

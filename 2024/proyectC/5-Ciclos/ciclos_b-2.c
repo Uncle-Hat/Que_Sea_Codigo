@@ -1,4 +1,8 @@
 #include <stdio.h>
+
+// En esta función le doy un estado inicial a x, y, e i; luego le asigno a i cero y, si i es menor a x y res es verdadero.
+
+
 int main(void)
 {
     int x,i,res;

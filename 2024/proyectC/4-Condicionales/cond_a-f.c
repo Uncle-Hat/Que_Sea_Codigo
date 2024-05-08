@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//Damos valores a las variables x e y, y si x es mayor a y se muestra 
+
 int main(void)
 {
     int x,y;

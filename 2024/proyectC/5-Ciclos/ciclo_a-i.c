@@ -1,4 +1,7 @@
 #include <stdio.h>
+
+//Coloco un valor a i, mientras i sea diferente a cero, i se iguala a cero.
+
 int main()
 {
     int i;
