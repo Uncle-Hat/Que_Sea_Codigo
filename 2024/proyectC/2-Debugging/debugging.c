@@ -1,5 +1,5 @@
 
-//Esta funcion va mostrando los estados de cada variable y también las opera y muestra los resultados
+//Esta funcion toma estados de variable, las opera y muestra los resultados
 
 int main(void)
 {
