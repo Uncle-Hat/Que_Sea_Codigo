@@ -22,12 +22,16 @@ void start_timer(int duration) {
 }
 
 int main() {
-    while (1) {
+    int i;
+    printf("Enter the number of pomodoros you want to do: ");
+    scanf("%d", &i);    
+    while (i != 0) {
         printf("Start working for 25 minutes.\n");
         start_timer(25 * 60);  // 25 minutes
         printf("Time's up! Take a 5-minute break.\n");
         start_timer(5 * 60);  // 5 minutes
         printf("Break's over! Back to work.\n");
+        i--;
     }
 
     return 0;

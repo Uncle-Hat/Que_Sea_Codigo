@@ -14,6 +14,6 @@ int main()
         i = i-1;
         printf("c2: i -> %d \n",i);
     }
-    printf("c3: i -> %d ",i);
+    printf("c3: i -> %d \n",i);
     return 0;
 }
