@@ -20,5 +20,6 @@
     },
     "workbench.productIconTheme": "icons-carbon",
     "workbench.preferredDarkColorTheme": "Blueberry Banana",
-    "workbench.colorTheme": "Blueberry Banana"
+    "workbench.preferredLightColorTheme": "Github Light Theme - Gray",
+    "workbench.colorTheme": "Github Light Theme - Gray"
 }
