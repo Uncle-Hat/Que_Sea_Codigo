@@ -13,6 +13,17 @@ struct info_t operar(int x, int y){
     res.op_sum = x+y;
     res.op_mul = x*y;
     res.op_div =  x/y;
+    /* 
+    Es más prolijo crear una función auxiliar abs 
+    int abs(int x){
+        if (x>0){
+            return x;
+        }
+        else {
+            return -x;
+        }
+    }
+    */
     if (x<y)
     {
         res.op_dist = -(x-y);

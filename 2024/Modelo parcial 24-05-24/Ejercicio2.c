@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdbool.h>
-#define N 5
+#define N 5 //Tamaño arreglo fijo
+
+//gcc -Wall -Wextra -std=c99 Ej1.c -o Ej1
 
 //Tuve problemas para darme cuenta acerca del sinónimo de tipos
 
 typedef struct {
-    int cant_v;          
+    int cant_v;
     int cant_pares;      
     int cant_imp;   
     bool hay_8;     
@@ -16,6 +18,10 @@ typedef struct {
 
 datos llenar_estructura(int a[], int tam, int v){
     datos res = {0,0,0,false};
+    /* 
+    While es mucho más recomendable (porque lo vimos en clase)
+    Intentar no hacer tantos if anidados
+    */
     for (int i = 0; i < tam; i++)
     {        
         if (a[i] % 2 == 0) //Si es par
@@ -62,6 +68,9 @@ int pInt(char c){
     scanf("%d",&res);
     return res;
     }
+
+// El arreglo es una variable más
+// por eso se usa a y no a[] a la hora de llamarlo
 
 int main()
 {
