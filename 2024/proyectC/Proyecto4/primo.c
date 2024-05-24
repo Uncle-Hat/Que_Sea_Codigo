@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-//Tuve que ayudarme con IA para llegar al resultado de este ejercicio, por lo tanto implementé el cálculo y traté de entenderlo
+//Tuve que ayudarme con IA para llegar al resultado de este ejercicio, por lo tanto implementé el código y traté de entenderlo
 
 int nesimo_primo(int N) {
     int contador = 0; // Contador para llevar la cuenta de los números primos encontrados
@@ -43,9 +43,6 @@ int main()
         printf("Error: El valor elegido debe ser positivo\n");
         main();
     }
-    // else if (n==0||n==1||n==2){
-    //     printf("0, 1 y 2 son números primos");
-    // }
     else{
         printf("El %d° primo es %d\n",n,nesimo_primo(n));
     }
