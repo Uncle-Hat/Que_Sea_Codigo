@@ -2,8 +2,8 @@
 #include <assert.h>
 
 
-void intShow(int x){
-    printf("El entero es %d",x);
+void intShow(int x,char a){
+    printf("El entero %c es %d\n",a,x);
 }
 
 int intInput(char a){
@@ -33,9 +33,9 @@ int main()
         y = auxY + auxX + auxZ;
         z = 2 * auxZ;
     }
-    intShow(x);
-    intShow(y);
-    intShow(z);
+    intShow(x,'x');
+    intShow(y,'y');
+    intShow(z,'z');
     assert(((x+y+z) % 2 == 0 )&&( z == 2* auxZ )&& ((x == auxY * auxX && y == auxY+auxX+auxZ+1)||(x==2*auxY+auxX && y == auxY+auxX+auxZ)));
     return 0;
 }
