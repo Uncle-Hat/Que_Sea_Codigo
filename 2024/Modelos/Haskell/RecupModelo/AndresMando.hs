@@ -24,7 +24,7 @@
 
 data Item = Azucar | Cafe | Maiz | Trigo | Yerba deriving Show
 type Toneladas = Int
-data Cargamento= SinCarga | Carga Item Toneladas deriving Show
+data Cargamento = SinCarga | Carga Item Toneladas deriving Show
 type Numeracion = Int 
 data Tren = Vagon Numeracion Cargamento Tren | Fin deriving Show
 
@@ -50,3 +50,19 @@ ejemplotrens = Vagon 69 (Carga Cafe 7) (Vagon 76 SinCarga (Vagon 30000  (Carga Y
 
 -- ghci> vagones_item ejemplotrens Yerba
 -- [30000]
+
+--iNvEnT p' Andrés
+
+-- cargaigual :: Cargamento -> Cargamento -> Bool
+-- cargaigual (Carga it1 tons1) (Carga it2 tons2) = igualitem it1 it2
+-- cargaigual SinCarga SinCarga = True 
+-- cargaigual _ _ = False 
+                                        
+
+cdadcargtipo :: Tren -> Item -> Int
+cdadcargtipo Fin it1 = 0
+cdadcargtipo (Vagon num SinCarga ts) it1 = cdadcargtipo ts it1
+cdadcargtipo (Vagon num (Carga it tons) ts) it1 
+                                                | igualitem it it1 = 1 + cdadcargtipo ts it1
+                                                | otherwise = cdadcargtipo ts it1
+
