@@ -1,0 +1,19 @@
+html{
+    font-size: 2em;
+    background-color: black;
+}
+main{
+    color: white;
+}
+.Nav li{
+    display: inline;
+}
+.Nav li a{
+    background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgugimages.s3.us-east-2.amazonaws.com%2Fwp-content%2Fuploads%2F2018%2F07%2F22062514%2FFeature.jpg&f=1&nofb=1&ipt=ceed39a4c88622aea2b7ed5fb409270e00a2286b92bf5e31e89ddc7dce507f9a&ipo=images);
+    background-size: cover;
+}
+.Lista_Materias{
+    background-color: rgb(120, 118, 117);
+    margin: 1em;
+    padding: 1em;
+}
